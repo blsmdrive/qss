@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiet Stack Studios | Indie iOS Apps</title>
+    <meta name="description"
+        content="Quiet Stack Studios - Creators of premium iOS experiences like Flint and Verdant Garden.">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Home Specific Styles */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+            /* Offset for nav */
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .catalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .app-card {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--surface-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .blockphone-icon {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .verdant-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .app-card h3 {
+            margin-bottom: 0.25rem;
+            z-index: 1;
+        }
+
+        .app-card p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            z-index: 1;
+        }
+
+        .app-card .link-text {
+            color: var(--accent-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: auto;
+            z-index: 1;
+            transition: transform var(--transition-fast);
+        }
+
+        .app-card:hover .link-text {
+            transform: translateX(5px);
+        }
+
+        footer {
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--surface-border);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                Quiet Stack
+            </a>
+            <div class="nav-links">
+                <a href="#apps">Apps</a>
+                <a href="support.html">Support</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero container">
+        <div class="hero-content reveal">
+            <h1>Crafting <span class="text-gradient">Premium</span><br>iOS Experiences.</h1>
+            <p>Quiet Stack Studios builds beautiful, privacy-first, and highly functional apps for your Apple devices.
+                Discover tools designed to enhance your digital life.</p>
+            <div class="hero-actions">
+                <a href="#apps" class="btn btn-primary">View Catalog</a>
+                <a href="support.html" class="btn btn-secondary">Get Support</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="apps" class="container reveal">
+        <h2>Our Apps</h2>
+        <p>Explore our flagship iOS applications.</p>
+
+        <div class="catalog">
+            <a href="apps/flint.html" class="glass-panel app-card reveal">
+                <div class="app-icon" style="background: none; box-shadow: none;">
+                    <img src="assets/flint_icon.png" alt="Flint App Icon"
+                        style="width: 100%; height: 100%; border-radius: 20px; object-fit: cover; box-shadow: 0 4px 14px rgba(0,0,0,0.4);">
+                </div>
+                <h3>Flint</h3>
+                <p>Take back control of your time. Flint helps you manage distractions and focus on what matters most.
+                </p>
+                <span class="link-text">Learn more &rarr;</span>
+            </a>
+
+            <a href="apps/verdant-garden.html" class="glass-panel app-card reveal" style="transition-delay: 0.1s;">
+                <div class="app-icon" style="background: none; box-shadow: none;">
+                    <img src="assets/verdant_icon.png" alt="Verdant Garden App Icon"
+                        style="width: 100%; height: 100%; border-radius: 20px; object-fit: cover; box-shadow: 0 4px 14px rgba(0,0,0,0.4);">
+                </div>
+                <h3>Verdant Garden</h3>
+                <p>Your personal digital greenhouse. Track, manage, and care for your plants with beautiful reminders
+                    and logs.</p>
+                <span class="link-text">Learn more &rarr;</span>
+            </a>
+        </div>
+    </section>
+
+    <footer class="container">
+        <div class="footer-content">
+            <p>&copy; 2026 Quiet Stack Studios. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flint | Quiet Stack Studios</title>
+    <meta name="description" content="Flint - Manage distractions and focus on what matters most.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .app-header {
+            padding-top: 120px;
+            padding-bottom: 4rem;
+            text-align: center;
+        }
+
+        .app-icon-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+            margin-bottom: 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: var(--surface-color);
+            border: 1px solid var(--surface-border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .screenshot-placeholder {
+            width: 100%;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            margin: 4rem auto;
+            max-width: 800px;
+            border: 1px dashed var(--surface-border);
+        }
+
+        footer {
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--surface-border);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                Quiet Stack
+            </a>
+            <div class="nav-links">
+                <a href="../index.html#apps" class="active">Apps</a>
+                <a href="../support.html">Support</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="container app-header">
+        <div class="reveal">
+            <img src="../assets/flint_icon.png" alt="Flint Icon"
+                style="width: 120px; height: 120px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); margin-bottom: 2rem;">
+        </div>
+        <h1 class="reveal" style="transition-delay: 0.1s;">Flint</h1>
+        <p class="reveal" style="margin: 0 auto; transition-delay: 0.2s;">Reclaim your focus and drastically reduce
+            screen time.</p>
+        <div class="reveal" style="margin-top: 2rem; transition-delay: 0.3s;">
+            <a href="#" class="btn btn-primary"
+                style="background: var(--surface-color); color: var(--text-primary); border: 1px solid var(--surface-border); box-shadow: 0 4px 14px rgba(0,0,0,0.2);">Download
+                on App Store</a>
+        </div>
+    </header>
+
+    <section class="container reveal">
+        <div class="screenshot-placeholder">
+            <img src="../assets/blockphone_mockup.png" alt="Flint Concept"
+                style="width: 100%; height: 100%; object-fit: cover; border-radius: 30px;">
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <h3>Strict Blocking</h3>
+                <p>Ensure you stay off distracting apps with rigorous block lists and schedules that you control.</p>
+            </div>
+            <div class="feature-card reveal" style="transition-delay: 0.1s;">
+                <h3>Screen Time Insights</h3>
+                <p>View detailed analytics on where your time goes, helping you make better digital habits.</p>
+            </div>
+            <div class="feature-card reveal" style="transition-delay: 0.2s;">
+                <h3>Privacy First</h3>
+                <p>Your screen time data never leaves your device. We use on-device APIs for max privacy.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="container">
+        <div class="footer-content">
+            <p>&copy; 2026 Quiet Stack Studios. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms of Service</a>
+                <a href="../support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
