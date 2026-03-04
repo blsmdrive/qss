@@ -4,57 +4,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flint | Quiet Stack Studios</title>
-    <meta name="description" content="Flint - Manage distractions and focus on what matters most.">
+    <title>Flint Card | Block Your Phone Instantly</title>
+    <meta name="description"
+        content="Flint Card — The NFC card that blocks your phone with a single tap. Reclaim your focus instantly. Includes the Flint app free.">
     <link rel="stylesheet" href="../css/styles.css">
     <style>
-        .app-header {
-            padding-top: 120px;
-            padding-bottom: 4rem;
+        /* ---- Hero ---- */
+        .flint-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+        }
+
+        .flint-hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle at 30% 40%, rgba(245, 158, 11, 0.12) 0%, transparent 55%),
+                radial-gradient(circle at 70% 60%, rgba(217, 119, 6, 0.08) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-price {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        .hero-image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-product-img {
+            max-width: 420px;
+            width: 100%;
+            border-radius: 20px;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 20px 40px rgba(245, 158, 11, 0.25));
+        }
+
+        /* ---- Social Proof ---- */
+        .social-proof {
+            padding: 3rem 0;
+            border-top: 1px solid var(--surface-border);
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .proof-item h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .proof-item p {
+            font-size: 0.95rem;
+            margin: 0 auto;
+        }
+
+        /* ---- How It Works ---- */
+        .how-section {
             text-align: center;
         }
 
-        .app-icon-large {
-            width: 120px;
-            height: 120px;
-            border-radius: 30px;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
-            margin-bottom: 2rem;
+        .how-section h2 {
+            margin-bottom: 0.5rem;
         }
 
+        .step-card .glass-panel {
+            padding: 2.5rem 2rem;
+        }
+
+        .step-card .glass-panel:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .step-number {
+            background: var(--flint-gradient);
+            color: #000;
+        }
+
+        .step-connector {
+            display: none;
+        }
+
+        @media (min-width: 769px) {
+            .step-connector {
+                display: block;
+                position: absolute;
+                top: 28px;
+                right: -1rem;
+                width: 2rem;
+                height: 2px;
+                background: var(--surface-border);
+            }
+
+            .step-card:last-child .step-connector {
+                display: none;
+            }
+        }
+
+        /* ---- Features ---- */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
         }
 
         .feature-card {
-            background: var(--surface-color);
-            border: 1px solid var(--surface-border);
-            border-radius: 20px;
             padding: 2rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .screenshot-placeholder {
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            margin: 4rem auto;
-            max-width: 800px;
-            border: 1px dashed var(--surface-border);
+            height: 3px;
+            background: var(--flint-gradient);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
         }
 
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* ---- Product Showcase ---- */
+        .showcase {
+            text-align: center;
+            position: relative;
+        }
+
+        .showcase-img-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-top: 3rem;
+        }
+
+        .showcase-img {
+            max-width: 500px;
+            width: 100%;
+            border-radius: 24px;
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+
+        .showcase-badge {
+            position: absolute;
+            bottom: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--flint-gradient);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        /* ---- FAQ ---- */
+        .faq-section {
+            text-align: center;
+        }
+
+        /* ---- Final CTA ---- */
+        .cta-section {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-panel {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.05) 100%);
+            border-color: rgba(245, 158, 11, 0.2);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+        }
+
+        .cta-panel:hover {
+            transform: none;
+        }
+
+        .cta-panel h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta-panel p {
+            margin: 0 auto 2rem;
+        }
+
+        .cta-price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .cta-price-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* ---- Footer ---- */
         footer {
             padding: 4rem 0 2rem;
             border-top: 1px solid var(--surface-border);
@@ -78,6 +289,49 @@
         .footer-links a:hover {
             color: var(--text-primary);
         }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-price {
+                text-align: center;
+            }
+
+            .hero-product-img {
+                max-width: 300px;
+            }
+
+            .hero-image-wrapper {
+                order: -1;
+            }
+
+            .proof-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .cta-panel {
+                padding: 3rem 2rem;
+            }
+
+            .cta-price {
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
 
@@ -99,49 +353,214 @@
         </div>
     </nav>
 
-    <header class="container app-header">
-        <div class="reveal">
-            <img src="../assets/flint_icon.png" alt="Flint Icon"
-                style="width: 120px; height: 120px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); margin-bottom: 2rem;">
-        </div>
-        <h1 class="reveal" style="transition-delay: 0.1s;">Flint</h1>
-        <p class="reveal" style="margin: 0 auto; transition-delay: 0.2s;">Reclaim your focus and drastically reduce
-            screen time.</p>
-        <div class="reveal" style="margin-top: 2rem; transition-delay: 0.3s;">
-            <a href="#" class="btn btn-primary"
-                style="background: var(--surface-color); color: var(--text-primary); border: 1px solid var(--surface-border); box-shadow: 0 4px 14px rgba(0,0,0,0.2);">Download
-                on App Store</a>
-        </div>
-    </header>
-
-    <section class="container reveal">
-        <div class="screenshot-placeholder">
-            <img src="../assets/blockphone_mockup.png" alt="Flint Concept"
-                style="width: 100%; height: 100%; object-fit: cover; border-radius: 30px;">
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-card reveal">
-                <h3>Strict Blocking</h3>
-                <p>Ensure you stay off distracting apps with rigorous block lists and schedules that you control.</p>
+    <!-- ===== HERO ===== -->
+    <section class="flint-hero container">
+        <div class="hero-grid">
+            <div class="hero-text">
+                <div class="reveal">
+                    <img src="../assets/flint_dark_logo.png" alt="Flint Logo"
+                        style="width: 64px; height: 64px; border-radius: 16px; margin-bottom: 1.5rem; box-shadow: 0 6px 20px rgba(0,0,0,0.4);">
+                </div>
+                <h1 class="reveal" style="transition-delay: 0.1s;">One Tap.<br><span class="text-gradient-flint">Phone
+                        Blocked.</span></h1>
+                <p class="reveal" style="transition-delay: 0.2s;">The Flint Card is an NFC-powered card that
+                    instantly locks your phone and blocks distracting apps. Just tap and focus.</p>
+                <div class="hero-actions reveal" style="transition-delay: 0.3s;">
+                    <a href="checkout.html" class="btn btn-flint btn-lg" id="hero-buy-btn">Buy Now — $19.99</a>
+                    <a href="#how-it-works" class="btn btn-secondary btn-lg">How It Works</a>
+                </div>
+                <p class="hero-price reveal" style="transition-delay: 0.4s;">Free shipping · Flint app included ·
+                    Works with iPhone</p>
             </div>
-            <div class="feature-card reveal" style="transition-delay: 0.1s;">
-                <h3>Screen Time Insights</h3>
-                <p>View detailed analytics on where your time goes, helping you make better digital habits.</p>
-            </div>
-            <div class="feature-card reveal" style="transition-delay: 0.2s;">
-                <h3>Privacy First</h3>
-                <p>Your screen time data never leaves your device. We use on-device APIs for max privacy.</p>
+            <div class="hero-image-wrapper reveal" style="transition-delay: 0.2s;">
+                <img src="../assets/flint_card_mockup.png" alt="Flint NFC Card" class="hero-product-img">
             </div>
         </div>
     </section>
 
-    <section class="container reveal" style="text-align: center; padding-top: 2rem;">
-        <div class="glass-panel" style="max-width: 600px; margin: 0 auto;">
-            <h3>Need Help with Flint?</h3>
-            <p style="margin: 0 auto 1.5rem;">Have a question, found a bug, or just want to say hi? We'd love to hear
-                from you.</p>
-            <a href="mailto:hello@quietstackstudios.com" class="btn btn-primary">hello@quietstackstudios.com</a>
+    <!-- ===== SOCIAL PROOF ===== -->
+    <section class="social-proof container reveal">
+        <div class="proof-grid">
+            <div class="proof-item">
+                <h3 class="text-gradient-flint">2 hrs+</h3>
+                <p>Average daily screen time saved</p>
+            </div>
+            <div class="proof-item">
+                <h3 class="text-gradient-flint">1 Tap</h3>
+                <p>To block your phone instantly</p>
+            </div>
+            <div class="proof-item">
+                <h3 class="text-gradient-flint">100%</h3>
+                <p>Private — all data stays on device</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section id="how-it-works" class="container how-section">
+        <h2 class="reveal">How It Works</h2>
+        <p class="reveal" style="margin: 0 auto;">Three simple steps to reclaim your focus.</p>
+
+        <div class="steps-grid">
+            <div class="step-card reveal">
+                <div class="glass-panel">
+                    <div class="step-number">1</div>
+                    <div class="step-connector"></div>
+                    <div class="step-icon">📱</div>
+                    <h3>Tap the Card</h3>
+                    <p>Hold the Flint Card against the back of your iPhone. The NFC chip is detected instantly.</p>
+                </div>
+            </div>
+            <div class="step-card reveal" style="transition-delay: 0.1s;">
+                <div class="glass-panel">
+                    <div class="step-number">2</div>
+                    <div class="step-connector"></div>
+                    <div class="step-icon">⚡</div>
+                    <h3>Shortcut Activates</h3>
+                    <p>An iOS Shortcut fires automatically, triggering Flint's built-in blocking profile on your device.
+                    </p>
+                </div>
+            </div>
+            <div class="step-card reveal" style="transition-delay: 0.2s;">
+                <div class="glass-panel">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">🔒</div>
+                    <h3>Phone Blocked</h3>
+                    <p>Distracting apps are instantly blocked. Put your phone down and get back to what matters.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="container">
+        <h2 class="reveal" style="text-align: center;">Why Flint?</h2>
+        <p class="reveal" style="text-align: center; margin: 0 auto;">A physical tool for a digital problem.</p>
+
+        <div class="features-grid">
+            <div class="glass-panel feature-card reveal">
+                <span class="feature-icon">⚡</span>
+                <h3>Instant Blocking</h3>
+                <p>No fumbling through menus. One tap and distractions are gone — in under a second.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.05s;">
+                <span class="feature-icon">📡</span>
+                <h3>Works Offline</h3>
+                <p>The NFC card needs no battery, no Bluetooth, no Wi-Fi. It works anywhere, anytime.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.1s;">
+                <span class="feature-icon">📱</span>
+                <h3>Flint App Included</h3>
+                <p>Every card comes with free access to the Flint app for customising your block lists and schedules.
+                </p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.15s;">
+                <span class="feature-icon">🔒</span>
+                <h3>Privacy First</h3>
+                <p>Your data never leaves your device. No accounts, no tracking — built with privacy at the core.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.2s;">
+                <span class="feature-icon">🎯</span>
+                <h3>Fully Customisable</h3>
+                <p>Choose exactly which apps get blocked and set your own focus schedules through the Flint app.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.25s;">
+                <span class="feature-icon">💧</span>
+                <h3>Premium Build</h3>
+                <p>Sleek matte black card with embossed logo. Slim enough for your wallet, built to last.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PRODUCT SHOWCASE ===== -->
+    <section class="container showcase reveal">
+        <h2>The Flint Card</h2>
+        <p style="margin: 0 auto;">A physical anchor for your digital wellbeing.</p>
+        <div class="showcase-img-wrapper">
+            <img src="../assets/flint_card_mockup.png" alt="Flint NFC Card Product" class="showcase-img">
+            <span class="showcase-badge">NFC-Powered · No Battery Required</span>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="container faq-section">
+        <h2 class="reveal">Frequently Asked Questions</h2>
+        <div class="faq-list reveal">
+            <div class="faq-item">
+                <button class="faq-question" id="faq-1">
+                    What is the Flint Card?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>The Flint Card is a physical NFC card branded with the Flint logo. When you tap it against your
+                        iPhone, it triggers an iOS Shortcut that activates Flint's built-in phone-blocking feature —
+                        locking out distracting apps instantly.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-2">
+                    How does the NFC tap work?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>iPhones with NFC (iPhone 7 and newer) can read NFC tags natively. When you tap the Flint Card,
+                        iOS
+                        detects the tag and runs a pre-configured Shortcut that activates Flint's blocking profile. No
+                        extra app needs to be open.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-3">
+                    Do I need the Flint app?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes — the Flint app is included free with every card purchase. You'll use it to set up your block
+                        lists, configure the NFC shortcut, and customise your focus sessions.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-4">
+                    What phones are supported?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>The Flint Card works with any iPhone 7 or newer running iOS 14+. Android support is not available
+                        at this time.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-5">
+                    Can I customise what gets blocked?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Absolutely. Through the Flint app, you have full control over which apps are blocked, when
+                        blocking is active, and how long each focus session lasts.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-6">
+                    Does the card need charging?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>No. The Flint Card is a passive NFC tag — it has no battery and never needs charging. It's
+                        powered
+                        by the NFC field from your phone when you tap it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FINAL CTA ===== -->
+    <section class="container cta-section reveal">
+        <div class="glass-panel cta-panel">
+            <h2>Ready to <span class="text-gradient-flint">Take Back</span> Your Focus?</h2>
+            <p>One card. One tap. Zero distractions.</p>
+            <div class="cta-price text-gradient-flint">$19.99</div>
+            <p class="cta-price-note">Includes Flint Card + Flint App · Free Shipping</p>
+            <a href="checkout.html" class="btn btn-flint btn-lg">Order Now</a>
         </div>
     </section>
 
