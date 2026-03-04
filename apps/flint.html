@@ -130,8 +130,10 @@
             .step-connector {
                 display: block;
                 position: absolute;
-                top: 28px;
-                right: -1rem;
+                top: 68px;
+                /* Align vertically with the center of the step-number */
+                right: -2rem;
+                /* Spans across the 2rem gap */
                 width: 2rem;
                 height: 2px;
                 background: var(--surface-border);
@@ -145,15 +147,26 @@
         /* ---- Features ---- */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
+            /* 5 cards in one horizontal stack */
             gap: 1.5rem;
             margin-top: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
         }
 
         .feature-card {
             padding: 2rem;
             position: relative;
             overflow: hidden;
+            height: 100%;
+            /* Stretch to grid track height */
+            display: flex;
+            flex-direction: column;
         }
 
         .feature-card::before {
@@ -262,7 +275,8 @@
         .cta-price-note {
             font-size: 0.9rem;
             color: var(--text-secondary);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            /* Increased to avoid touching the button */
         }
 
         /* ---- Footer ---- */
@@ -290,12 +304,78 @@
             color: var(--text-primary);
         }
 
+        /* ---- Laptop / Desktop Adjustments ---- */
+        @media (min-width: 769px) and (max-width: 1366px) {
+            .hero-grid {
+                gap: 2rem;
+            }
+
+            .hero-product-img {
+                max-width: 320px;
+                /* Reduced from 340px for safety */
+            }
+
+            .step-card .glass-panel {
+                padding: 1.5rem 1rem;
+            }
+
+            /* Disable connectors on narrower desktop screens to prevent overlap */
+            @media (max-width: 1024px) {
+                .step-connector {
+                    display: none;
+                }
+            }
+
+            .step-connector {
+                width: 2rem;
+                right: -2rem;
+                top: 52px;
+                /* Center aligned for laptop 1.5rem padding */
+            }
+
+            .btn-lg {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .hero-price {
+                margin-top: 2rem;
+                /* Increased from 1.5 to provide breathing room from buttons */
+            }
+
+            /* Add some explicit gaps in case actions wrap on smaller laptops */
+            .hero-actions {
+                gap: 1.5rem 1rem;
+            }
+        }
+
+        /* ---- Global Spacing Fixes ---- */
+        section {
+            padding: 4.5rem 0;
+        }
+
+        .hero-price {
+            margin-top: 1.5rem;
+        }
+
+        .steps-grid,
+        .features-grid,
+        .proof-grid {
+            margin-bottom: 2rem;
+        }
+
+        .showcase-badge {
+            bottom: -24px;
+        }
+
         /* ---- Responsive ---- */
         @media (max-width: 768px) {
             .hero-grid {
                 grid-template-columns: 1fr;
                 gap: 3rem;
                 text-align: center;
+                align-items: center;
+                /* Ensure mobile stack is centered */
             }
 
             .hero-text p {
@@ -363,7 +443,7 @@
                 </div>
                 <h1 class="reveal" style="transition-delay: 0.1s;">One Tap.<br><span class="text-gradient-flint">Phone
                         Blocked.</span></h1>
-                <p class="reveal" style="transition-delay: 0.2s;">The Flint Card is an NFC-powered card that
+                <p class="reveal" style="transition-delay: 0.2s;">The Flint Card is a smart card that
                     instantly locks your phone and blocks distracting apps. Just tap and focus.</p>
                 <div class="hero-actions reveal" style="transition-delay: 0.3s;">
                     <a href="checkout.html" class="btn btn-flint btn-lg" id="hero-buy-btn">Buy Now — $19.99</a>
@@ -464,11 +544,6 @@
                 <h3>Fully Customisable</h3>
                 <p>Choose exactly which apps get blocked and set your own focus schedules through the Flint app.</p>
             </div>
-            <div class="glass-panel feature-card reveal" style="transition-delay: 0.25s;">
-                <span class="feature-icon">💧</span>
-                <h3>Premium Build</h3>
-                <p>Sleek matte black card with embossed logo. Slim enough for your wallet, built to last.</p>
-            </div>
         </div>
     </section>
 
@@ -478,7 +553,7 @@
         <p style="margin: 0 auto;">A physical anchor for your digital wellbeing.</p>
         <div class="showcase-img-wrapper">
             <img src="../assets/flint_card_mockup.png" alt="Flint NFC Card Product" class="showcase-img">
-            <span class="showcase-badge">NFC-Powered · No Battery Required</span>
+            <span class="showcase-badge">No Battery Required</span>
         </div>
     </section>
 
@@ -503,8 +578,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <p>iPhones with NFC (iPhone 7 and newer) can read NFC tags natively. When you tap the Flint Card,
-                        iOS
+                    <p>iPhones with NFC capability can read NFC tags natively. When you tap the Flint Card, iOS
                         detects the tag and runs a pre-configured Shortcut that activates Flint's blocking profile. No
                         extra app needs to be open.</p>
                 </div>
@@ -525,7 +599,7 @@
                     <span class="faq-chevron">▼</span>
                 </button>
                 <div class="faq-answer">
-                    <p>The Flint Card works with any iPhone 7 or newer running iOS 14+. Android support is not available
+                    <p>The Flint Card works with any compatible iPhone running iOS 18+. Android support is not available
                         at this time.</p>
                 </div>
             </div>

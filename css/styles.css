@@ -124,7 +124,8 @@ a {
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
 }
 
 section {
@@ -312,7 +313,8 @@ nav.scrolled {
 /* Step Cards (How It Works) */
 .steps-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* Prevent extreme squeezing before wrap */
   gap: 2rem;
   margin-top: 3rem;
   position: relative;
