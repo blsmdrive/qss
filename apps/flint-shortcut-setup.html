@@ -332,71 +332,6 @@
             font-size: 0.85rem;
         }
 
-        /* ---- Shortcut download banner ---- */
-        .shortcut-banner {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.14) 0%, rgba(217, 119, 6, 0.07) 100%);
-            border: 1px solid rgba(245, 158, 11, 0.28);
-            border-radius: var(--radius-card);
-            padding: 1.4rem 1.5rem;
-            margin-bottom: 1.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.85rem;
-        }
-
-        .shortcut-banner-top {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .shortcut-icon {
-            font-size: 2rem;
-            flex-shrink: 0;
-        }
-
-        .shortcut-banner-top h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.15rem;
-        }
-
-        .shortcut-banner-top p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .btn-shortcut {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, var(--amber), var(--amber-dark));
-            color: #000;
-            font-family: inherit;
-            font-size: 0.95rem;
-            font-weight: 700;
-            padding: 0.8rem 1.25rem;
-            border-radius: 100px;
-            border: none;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all var(--transition);
-            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
-        }
-
-        .btn-shortcut:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 22px rgba(245, 158, 11, 0.45);
-        }
-
-        .shortcut-note {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-align: center;
-        }
-
         /* ---- Scroll progress sticky ---- */
         .sticky-progress {
             position: sticky;
@@ -455,22 +390,6 @@
             <img src="../assets/flint_dark_logo.png" alt="Flint" class="app-icon">
             <h1>Set Up Your <span class="amber">Flint Shortcut</span></h1>
             <p>Follow these steps to link your Flint Card to iOS Shortcuts. Takes around 2 minutes.</p>
-        </div>
-
-        <!-- Shortcut download banner -->
-        <div class="shortcut-banner">
-            <div class="shortcut-banner-top">
-                <span class="shortcut-icon">⚡</span>
-                <div>
-                    <h3>Skip the manual steps</h3>
-                    <p>Tap below to install the Flint shortcut automatically. It sets up the action for you — then just
-                        scan your card.</p>
-                </div>
-            </div>
-            <a href="../assets/Flint.shortcut" class="btn-shortcut">
-                ⬇ Get Shortcut
-            </a>
-            <p class="shortcut-note">Requires the Flint app &amp; iOS 18+. Opens in the Shortcuts app.</p>
         </div>
 
         <!-- Sticky progress -->
