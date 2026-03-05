@@ -61,6 +61,32 @@
             margin-top: 1rem;
         }
 
+        /* ---- Nav Buy Button ---- */
+        .btn-nav-buy {
+            background: var(--flint-gradient);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+            transition: all var(--transition-normal);
+        }
+
+        /* Higher specificity to beat .nav-links a { color: var(--text-secondary) } in styles.css */
+        .nav-links .btn-nav-buy,
+        .nav-links .btn-nav-buy:hover {
+            color: #000;
+        }
+
+        .btn-nav-buy:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
         .hero-image-wrapper {
             display: flex;
             justify-content: center;
@@ -110,6 +136,10 @@
 
         .step-card .glass-panel {
             padding: 2.5rem 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .step-card .glass-panel:hover {
@@ -121,21 +151,33 @@
             color: #000;
         }
 
+        /* Connectors live at the steps-grid level, not inside cards */
+        .steps-grid {
+            position: relative;
+        }
+
         .step-connector {
             display: none;
         }
 
         @media (min-width: 769px) {
+
+            /* Override the shared steps-grid to be exactly 3 columns */
+            .how-section .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
             .step-connector {
                 display: block;
                 position: absolute;
-                top: 68px;
-                /* Align vertically with the center of the step-number */
+                /* vertically centred with .step-number (56px tall, inside 2.5rem top padding = 40px) */
+                top: calc(2.5rem + 28px);
                 right: -2rem;
-                /* Spans across the 2rem gap */
+                /* start at the right edge, span the full 2rem gap */
                 width: 2rem;
                 height: 2px;
-                background: var(--surface-border);
+                background: linear-gradient(90deg, rgba(245, 158, 11, 0.5), rgba(245, 158, 11, 0.15));
+                z-index: 2;
             }
 
             .step-card:last-child .step-connector {
@@ -159,7 +201,7 @@
         }
 
         .feature-card {
-            padding: 2rem;
+            padding: 1.5rem;
             position: relative;
             overflow: hidden;
             height: 100%;
@@ -206,22 +248,44 @@
             position: relative;
         }
 
+        .showcase-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
         .showcase-img-wrapper {
             position: relative;
-            display: inline-block;
-            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
         }
 
         .showcase-img {
-            max-width: 500px;
+            max-width: 380px;
             width: 100%;
             border-radius: 24px;
-            animation: glow-pulse 3s ease-in-out infinite;
+            /* Use drop-shadow (works on transparent PNGs) instead of box-shadow */
+            animation: glow-pulse-drop 3s ease-in-out infinite;
+        }
+
+        @keyframes glow-pulse-drop {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 50px rgba(245, 158, 11, 0.6));
+            }
         }
 
         .showcase-badge {
             position: absolute;
-            bottom: -16px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--flint-gradient);
@@ -233,8 +297,49 @@
             white-space: nowrap;
         }
 
-        /* ---- FAQ ---- */
-        .faq-section {
+        .showcase-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .spec-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .spec-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .spec-row h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .spec-row p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .showcase-layout {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                text-align: center;
+            }
+
+            .spec-row {
+                text-align: left;
+            }
+        }
+
+        /* ---- FAQ: h2/subtitle centred; accordion list stays left-aligned ---- */
+        .faq-section h2,
+        .faq-section>p {
             text-align: center;
         }
 
@@ -274,8 +379,27 @@
         .cta-price-note {
             font-size: 0.9rem;
             color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            /* Increased to avoid touching the button */
+            margin-bottom: 2rem;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .trust-badge svg {
+            opacity: 0.6;
         }
 
         /* ---- Footer ---- */
@@ -303,8 +427,36 @@
             color: var(--text-primary);
         }
 
-        /* ---- Laptop / Desktop Adjustments ---- */
-        @media (min-width: 769px) and (max-width: 1366px) {
+        /* ---- Desktop / Large Monitor Adjustments ---- */
+        @media (min-width: 1025px) {
+            .flint-hero {
+                padding-top: 80px;
+            }
+
+            .hero-grid {
+                gap: 5rem;
+                /* Increased gap to separate text and image cleanly on wide screens */
+            }
+
+            .hero-product-img {
+                max-width: 480px;
+                /* Allow product image to be slightly larger on big monitors */
+            }
+
+            .cta-panel {
+                padding: 5rem 4rem;
+                /* More breathing room in the CTA on desktop */
+                max-width: 800px;
+            }
+
+            .features-grid {
+                gap: 2rem;
+                /* Give feature cards a bit more space */
+            }
+        }
+
+        /* ---- Laptop / Tablet Adjustments ---- */
+        @media (min-width: 769px) and (max-width: 1024px) {
             .hero-grid {
                 gap: 2rem;
             }
@@ -318,18 +470,9 @@
                 padding: 1.5rem 1rem;
             }
 
-            /* Disable connectors on narrower desktop screens to prevent overlap */
-            @media (max-width: 1024px) {
-                .step-connector {
-                    display: none;
-                }
-            }
-
             .step-connector {
-                width: 2rem;
-                right: -2rem;
-                top: 52px;
-                /* Center aligned for laptop 1.5rem padding */
+                display: none;
+                /* Keep connectors hidden on narrower laptops to avoid overlap */
             }
 
             .btn-lg {
@@ -339,10 +482,8 @@
 
             .hero-price {
                 margin-top: 2rem;
-                /* Increased from 1.5 to provide breathing room from buttons */
             }
 
-            /* Add some explicit gaps in case actions wrap on smaller laptops */
             .hero-actions {
                 gap: 1.5rem 1rem;
             }
@@ -350,7 +491,8 @@
 
         /* ---- Global Spacing Fixes ---- */
         section {
-            padding: 4.5rem 0;
+            padding: 4rem 0;
+            /* Slightly decreased global section padding */
         }
 
         .hero-price {
@@ -360,7 +502,7 @@
         .steps-grid,
         .features-grid,
         .proof-grid {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .showcase-badge {
@@ -369,12 +511,19 @@
 
         /* ---- Responsive ---- */
         @media (max-width: 768px) {
+
+            /* Hero: avoid CTA being off-screen on short mobile viewports */
+            .flint-hero {
+                min-height: auto;
+                padding-top: 90px;
+                padding-bottom: 3rem;
+            }
+
             .hero-grid {
                 grid-template-columns: 1fr;
-                gap: 3rem;
+                gap: 2rem;
                 text-align: center;
                 align-items: center;
-                /* Ensure mobile stack is centered */
             }
 
             .hero-text p {
@@ -391,7 +540,7 @@
             }
 
             .hero-product-img {
-                max-width: 300px;
+                max-width: 260px;
             }
 
             .hero-image-wrapper {
@@ -410,6 +559,44 @@
             .cta-price {
                 font-size: 2.5rem;
             }
+
+            .trust-badges {
+                gap: 1rem;
+            }
+        }
+
+        /* ---- Stock Nudge ---- */
+        .stock-nudge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-top: 0.6rem;
+        }
+
+        .stock-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #f59e0b;
+            flex-shrink: 0;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.75);
+            }
         }
     </style>
 </head>
@@ -426,8 +613,10 @@
                 Quiet Stack
             </a>
             <div class="nav-links">
-                <a href="../index.html#apps" class="active">Apps</a>
+                <a href="../index.html#apps">Apps</a>
                 <a href="../support.html">Support</a>
+                <a href="https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00" class="btn-nav-buy" id="nav-buy-btn"
+                    target="_blank" rel="noopener">Buy — $24.99</a>
             </div>
         </div>
     </nav>
@@ -445,11 +634,15 @@
                 <p class="reveal" style="transition-delay: 0.2s;">The Flint Card is a smart card that
                     instantly locks your phone and blocks distracting apps. Just tap and focus.</p>
                 <div class="hero-actions reveal" style="transition-delay: 0.3s;">
-                    <a href="checkout.html" class="btn btn-flint btn-lg" id="hero-buy-btn">Buy Now — $19.99</a>
+                    <a href="https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00" class="btn btn-flint btn-lg"
+                        id="hero-buy-btn" target="_blank" rel="noopener">Buy Now — $24.99</a>
                     <a href="#how-it-works" class="btn btn-secondary btn-lg">How It Works</a>
                 </div>
                 <p class="hero-price reveal" style="transition-delay: 0.4s;">Free shipping · Flint app included ·
                     Works with iPhone</p>
+                <div class="reveal stock-nudge" style="transition-delay: 0.45s;">
+                    <span class="stock-dot"></span> Only 38 cards left in stock
+                </div>
             </div>
             <div class="hero-image-wrapper reveal" style="transition-delay: 0.2s;">
                 <img src="../assets/flint_card_mockup.png" alt="Flint NFC Card" class="hero-product-img">
@@ -482,22 +675,26 @@
 
         <div class="steps-grid">
             <div class="step-card reveal">
+                <!-- Connector sits outside glass-panel so it isn't clipped -->
+                <div class="step-connector"></div>
                 <div class="glass-panel">
                     <div class="step-number">1</div>
-                    <div class="step-connector"></div>
                     <div class="step-icon">📱</div>
                     <h3>Tap the Card</h3>
                     <p>Hold the Flint Card against the back of your iPhone. The NFC chip is detected instantly.</p>
                 </div>
             </div>
             <div class="step-card reveal" style="transition-delay: 0.1s;">
+                <div class="step-connector"></div>
                 <div class="glass-panel">
                     <div class="step-number">2</div>
-                    <div class="step-connector"></div>
                     <div class="step-icon">⚡</div>
                     <h3>Shortcut Activates</h3>
                     <p>An iOS Shortcut fires automatically, triggering Flint's built-in blocking profile on your device.
                     </p>
+                    <a href="flint-shortcut-setup.html"
+                        style="font-size:0.85rem; color:#f59e0b; font-weight:600; text-decoration:none;">Set up your
+                        shortcut →</a>
                 </div>
             </div>
             <div class="step-card reveal" style="transition-delay: 0.2s;">
@@ -547,12 +744,44 @@
     </section>
 
     <!-- ===== PRODUCT SHOWCASE ===== -->
-    <section class="container showcase reveal">
-        <h2>The Flint Card</h2>
-        <p style="margin: 0 auto;">A physical anchor for your digital wellbeing.</p>
-        <div class="showcase-img-wrapper">
-            <img src="../assets/flint_card_mockup.png" alt="Flint NFC Card Product" class="showcase-img">
-            <span class="showcase-badge">No Battery Required</span>
+    <section class="container showcase">
+        <h2 class="reveal">The Flint Card</h2>
+        <p class="reveal" style="margin: 0 auto;">A credit-card-sized physical anchor for your digital wellbeing.</p>
+        <div class="showcase-layout">
+            <div class="showcase-img-wrapper reveal">
+                <img src="../assets/flint_card_mockup.png" alt="Flint NFC Card Product" class="showcase-img">
+                <span class="showcase-badge">No Battery Required</span>
+            </div>
+            <div class="showcase-specs reveal" style="transition-delay: 0.15s;">
+                <div class="spec-row">
+                    <span class="spec-icon">📐</span>
+                    <div>
+                        <h4>Credit-Card Size</h4>
+                        <p>85.6 × 54 mm — fits in any wallet or pocket.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">📡</span>
+                    <div>
+                        <h4>Passive NFC Tag</h4>
+                        <p>No battery, no Bluetooth. Powered entirely by your phone's NFC field.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">🍎</span>
+                    <div>
+                        <h4>iPhone iOS 18+</h4>
+                        <p>Works with all NFC-capable iPhones running iOS 18 or later.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">♻️</span>
+                    <div>
+                        <h4>Durable PVC Construction</h4>
+                        <p>Built to last — same material as a standard bank card.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -589,7 +818,9 @@
                 </button>
                 <div class="faq-answer">
                     <p>Yes — the Flint app is included free with every card purchase. You'll use it to set up your block
-                        lists, configure the NFC shortcut, and customise your focus sessions.</p>
+                        lists, configure the NFC shortcut, and customise your focus sessions. <a
+                            href="flint-shortcut-setup.html" style="color:#f59e0b; font-weight:600;">View the shortcut
+                            setup guide →</a></p>
                 </div>
             </div>
             <div class="faq-item">
@@ -631,9 +862,38 @@
         <div class="glass-panel cta-panel">
             <h2>Ready to <span class="text-gradient-flint">Take Back</span> Your Focus?</h2>
             <p>One card. One tap. Zero distractions.</p>
-            <div class="cta-price text-gradient-flint">$19.99</div>
+            <div class="cta-price text-gradient-flint">$24.99</div>
             <p class="cta-price-note">Includes Flint Card + Flint App · Free Shipping</p>
-            <a href="checkout.html" class="btn btn-flint btn-lg">Order Now</a>
+            <a href="https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00" class="btn btn-flint btn-lg" target="_blank"
+                rel="noopener">Order Now</a>
+            <p class="stock-nudge" style="margin-top: 0.75rem;"><span class="stock-dot"></span> Only 38 cards left</p>
+            <div class="trust-badges">
+                <span class="trust-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    Secure Checkout
+                </span>
+                <span class="trust-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                        <polyline points="17 6 23 6 23 12" />
+                    </svg>
+                    30-Day Returns
+                </span>
+                <span class="trust-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="3" width="15" height="13" />
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                        <circle cx="5.5" cy="18.5" r="2.5" />
+                        <circle cx="18.5" cy="18.5" r="2.5" />
+                    </svg>
+                    Free Shipping
+                </span>
+            </div>
         </div>
     </section>
 

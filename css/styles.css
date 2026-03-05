@@ -31,12 +31,13 @@
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 
   /* Spacing & Layout */
-  --container-max: 100%;
-  /* Changed from 1200px to allow full bleed edge-to-edge styling */
+  --container-max: 1200px;
+  /* Constrains layout nicely on large monitors */
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 2rem;
-  --spacing-xl: 4rem;
+  --spacing-xl: 5rem;
+  /* Slightly increased for more breathing room on desktop */
 
   /* Transitions */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -130,7 +131,7 @@ a {
 }
 
 section {
-  padding: var(--spacing-xl) 0;
+  padding: 3rem 0;
 }
 
 /* Navigation */
