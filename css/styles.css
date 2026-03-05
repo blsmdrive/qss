@@ -31,7 +31,8 @@
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 
   /* Spacing & Layout */
-  --container-max: 1200px;
+  --container-max: 100%;
+  /* Changed from 1200px to allow full bleed edge-to-edge styling */
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 2rem;
