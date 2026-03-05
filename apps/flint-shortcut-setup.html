@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flint | Shortcut Setup Guide</title>
+    <meta name="description" content="Step-by-step guide to setting up your Flint NFC shortcut in iOS.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ---- Reset & Base ---- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --amber: #f59e0b;
+            --amber-dark: #d97706;
+            --amber-glow: rgba(245, 158, 11, 0.18);
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --surface-2: #181818;
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f0f0f0;
+            --text-muted: rgba(240, 240, 240, 0.55);
+            --radius-card: 20px;
+            --radius-img: 16px;
+            --transition: 0.22s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ---- Layout ---- */
+        .page-wrap {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 0 1.25rem 4rem;
+        }
+
+        /* ---- Header ---- */
+        .page-header {
+            padding: 2.5rem 0 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .app-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1.25rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.65rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
+        }
+
+        .amber {
+            color: var(--amber);
+        }
+
+        .page-header p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 340px;
+            margin: 0 auto;
+        }
+
+        /* ---- Progress bar ---- */
+        .progress-bar-wrap {
+            background: var(--surface-2);
+            border-radius: 100px;
+            height: 4px;
+            margin: 2rem 0 2.5rem;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--amber), var(--amber-dark));
+            border-radius: 100px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        /* ---- Step cards ---- */
+        .step-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            transition: border-color var(--transition), transform var(--transition);
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+        .step-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.35s ease, transform 0.35s ease, border-color var(--transition);
+        }
+
+        .step-card.done {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+            color: #000;
+            font-weight: 800;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all var(--transition);
+        }
+
+        .step-card.done .step-num {
+            background: #22c55e;
+        }
+
+        .step-card.done .step-num::after {
+            content: '✓';
+        }
+
+        .step-card.done .step-num-text {
+            display: none;
+        }
+
+        .step-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .step-body p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        /* ---- Screenshot ---- */
+        .screenshot-wrap {
+            border-radius: var(--radius-img);
+            overflow: hidden;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+        }
+
+        .screenshot-wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ---- Tip box ---- */
+        .tip-box {
+            display: flex;
+            gap: 0.65rem;
+            background: var(--amber-glow);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .tip-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* ---- Mark done button ---- */
+        .btn-done {
+            width: 100%;
+            margin-top: 1.1rem;
+            padding: 0.75rem;
+            border-radius: 100px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            background: transparent;
+            color: var(--amber);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .btn-done:hover {
+            background: var(--amber-glow);
+            border-color: var(--amber);
+        }
+
+        .step-card.done .btn-done {
+            color: #22c55e;
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .step-card.done .btn-done:hover {
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        /* ---- Final complete card ---- */
+        .complete-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.06) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            border-radius: var(--radius-card);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .complete-card.show {
+            display: block;
+            animation: fade-up 0.4s ease;
+        }
+
+        @keyframes fade-up {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .complete-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .complete-card h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .complete-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* ---- Divider ---- */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 2rem 0 1.5rem;
+        }
+
+        .section-divider span {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--amber);
+            white-space: nowrap;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ---- Requirements pill ---- */
+        .req-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .req-pill {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .req-pill span {
+            font-size: 0.85rem;
+        }
+
+        /* ---- Shortcut download banner ---- */
+        .shortcut-banner {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.14) 0%, rgba(217, 119, 6, 0.07) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.28);
+            border-radius: var(--radius-card);
+            padding: 1.4rem 1.5rem;
+            margin-bottom: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .shortcut-banner-top {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .shortcut-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .shortcut-banner-top h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.15rem;
+        }
+
+        .shortcut-banner-top p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .btn-shortcut {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+            color: #000;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 0.8rem 1.25rem;
+            border-radius: 100px;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-shortcut:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 22px rgba(245, 158, 11, 0.45);
+        }
+
+        .shortcut-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* ---- Scroll progress sticky ---- */
+        .sticky-progress {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.65rem 1.25rem;
+            margin: 0 -1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .sticky-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .sticky-bar {
+            flex: 1;
+            height: 3px;
+            background: var(--surface-2);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .sticky-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--amber), var(--amber-dark));
+            border-radius: 100px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .sticky-count {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--amber);
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-wrap">
+
+        <!-- Header -->
+        <div class="page-header">
+            <img src="../assets/flint_dark_logo.png" alt="Flint" class="app-icon">
+            <h1>Set Up Your <span class="amber">Flint Shortcut</span></h1>
+            <p>Follow these steps to link your Flint Card to iOS Shortcuts. Takes around 2 minutes.</p>
+        </div>
+
+        <!-- Shortcut download banner -->
+        <div class="shortcut-banner">
+            <div class="shortcut-banner-top">
+                <span class="shortcut-icon">⚡</span>
+                <div>
+                    <h3>Skip the manual steps</h3>
+                    <p>Tap below to install the Flint shortcut automatically. It sets up the action for you — then just
+                        scan your card.</p>
+                </div>
+            </div>
+            <a href="../assets/Flint.shortcut" class="btn-shortcut">
+                ⬇ Get Shortcut
+            </a>
+            <p class="shortcut-note">Requires the Flint app &amp; iOS 18+. Opens in the Shortcuts app.</p>
+        </div>
+
+        <!-- Sticky progress -->
+        <div class="sticky-progress">
+            <span class="sticky-label">Progress</span>
+            <div class="sticky-bar">
+                <div class="sticky-bar-fill" id="sticky-fill"></div>
+            </div>
+            <span class="sticky-count" id="sticky-count">0 / 11</span>
+        </div>
+
+        <!-- ===== PART 1 ===== -->
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <span>Part 1 — Create the Automation</span>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="step-card" id="step-1">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">1</span></div>
+                <div class="step-title">Open the Shortcuts app</div>
+            </div>
+            <div class="step-body">
+                <p>Find the Shortcuts app on your home screen and tap to open it. It has a colourful icon with two
+                    overlapping shapes.</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 1 Open Shortcuts.jpg" alt="Open Shortcuts app"
+                        loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(1)">
+                    <span class="done-label">Mark as done</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card" id="step-2">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">2</span></div>
+                <div class="step-title">Go to the Automation tab</div>
+            </div>
+            <div class="step-body">
+                <p>Tap the <strong>Automation</strong> tab at the bottom of the screen. This is where NFC-triggered
+                    shortcuts are created.</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 2 Go to Automation tab.png" alt="Automation tab"
+                        loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(2)">
+                    <span class="done-label">Mark as done</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card" id="step-3">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">3</span></div>
+                <div class="step-title">Tap the + button</div>
+            </div>
+            <div class="step-body">
+                <p>Tap the <strong>+</strong> button in the top-right corner to create a new automation.</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 3 Tap plus button in top right hand corner.jpg"
+                        alt="Tap plus button" loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(3)">
+                    <span class="done-label">Mark as done</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card" id="step-4">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">4</span></div>
+                <div class="step-title">Scroll to find NFC</div>
+            </div>
+            <div class="step-body">
+                <p>Scroll through the list of triggers until you find <strong>NFC</strong>. Tap it to select it as your
+                    automation trigger.</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 4 Scroll until you find nfc.PNG" alt="Find NFC trigger"
+                        loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(4)">
+                    <span class="done-label">Mark as done</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step-card" id="step-5">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">5</span></div>
+                <div class="step-title">Tap 'Scan'</div>
+            </div>
+            <div class="step-body">
+                <div class="tip-box">
+                    <span class="tip-icon">🃏</span>
+                    <span>Have your Flint Card ready — you'll need to tap it against your phone in the next step.</span>
+                </div>
+                <p>Tap <strong>Scan</strong> to begin scanning for an NFC tag.</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 5 Tap 'scan'.PNG" alt="Tap Scan" loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(5)">
+                    <span class="done-label">Mark as done</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="step-card" id="step-6">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">6</span></div>
+                <div class="step-title">Scan your Flint Card</div>
+            </div>
+            <div class="step-body">
+                <p>Hold the top of your iPhone against the Flint Card until it scans. You'll feel a vibration and see a
+                    confirmation.</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 6 scan flint.PNG" alt="Scan Flint Card" loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(6)">
+                    <span class="done-label">Mark as done</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="step-card" id="step-7">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">7</span></div>
+                <div class="step-title">Name your Flint Card</div>
+            </div>
+            <div class="step-body">
+                <p>Give the tag a name — something like <strong>"Flint Card"</strong> — then tap <strong>Add</strong> to
+                    continue.</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 7 Name your flint.PNG" alt="Name your Flint" loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(7)">
+                    <span class="done-label">Mark as done</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 8 -->
+        <div class="step-card" id="step-8">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">8</span></div>
+                <div class="step-title">Select 'Run Immediately'</div>
+            </div>
+            <div class="step-body">
+                <div class="tip-box">
+                    <span class="tip-icon">⚡</span>
+                    <span>Choosing <strong>Run Immediately</strong> means the card works with a single tap — no
+                        confirmation banner required.</span>
+                </div>
+                <p>Select <strong>Run Immediately</strong> so the shortcut fires the moment you tap the card.</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 8 Select 'run immediately'.PNG" alt="Run Immediately"
+                        loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(8)">
+                    <span class="done-label">Mark as done</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== PART 2 ===== -->
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <span>Part 2 — Add the Flint Action</span>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- Step 9 -->
+        <div class="step-card" id="step-9">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">9</span></div>
+                <div class="step-title">Select 'Create New Shortcut'</div>
+            </div>
+            <div class="step-body">
+                <p>Tap <strong>Create New Shortcut</strong> to add the action that will run when the card is tapped.</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 9 Select Create new shortcut.PNG" alt="Create New Shortcut"
+                        loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(9)">
+                    <span class="done-label">Mark as done</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 10 -->
+        <div class="step-card" id="step-10">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">10</span></div>
+                <div class="step-title">Search for "Flint" and select Toggle Block Focus</div>
+            </div>
+            <div class="step-body">
+                <p>In the action search bar, type <strong>Flint</strong>. From the results, select <strong>Toggle Block
+                        Focus</strong>.</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 10 type in flint in the search bar and select toggle block focus.jpg"
+                        alt="Search Flint and select Toggle Block Focus" loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(10)">
+                    <span class="done-label">Mark as done</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 11 -->
+        <div class="step-card" id="step-11">
+            <div class="step-header">
+                <div class="step-num"><span class="step-num-text">11</span></div>
+                <div class="step-title">Tap the blue tick to save</div>
+            </div>
+            <div class="step-body">
+                <p>Tap the <strong>blue tick ✓</strong> in the top-right corner to save your automation. That's it —
+                    you're all set!</p>
+                <div class="screenshot-wrap">
+                    <img src="../assets/shortcut-setup/Step 11 Select the blue tick.png" alt="Save with blue tick"
+                        loading="lazy">
+                </div>
+                <button class="btn-done" onclick="markDone(11)">
+                    <span class="done-label">All done!</span> ✓
+                </button>
+            </div>
+        </div>
+
+        <!-- Complete card -->
+        <div class="complete-card" id="complete-card">
+            <span class="complete-icon">🎉</span>
+            <h2>You're all set!</h2>
+            <p>Tap your Flint Card against your iPhone to activate your first focus session. One tap, phone blocked.</p>
+        </div>
+
+    </div><!-- /page-wrap -->
+
+    <script>
+        const TOTAL = 11;
+        let done = new Set();
+
+        function markDone(n) {
+            const card = document.getElementById('step-' + n);
+            if (done.has(n)) {
+                done.delete(n);
+                card.classList.remove('done');
+            } else {
+                done.add(n);
+                card.classList.add('done');
+            }
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const pct = Math.round((done.size / TOTAL) * 100);
+            document.getElementById('sticky-fill').style.width = pct + '%';
+            document.getElementById('sticky-count').textContent = done.size + ' / ' + TOTAL;
+
+            const completeCard = document.getElementById('complete-card');
+            if (done.size === TOTAL) {
+                completeCard.classList.add('show');
+                completeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                completeCard.classList.remove('show');
+            }
+        }
+
+        // Animate cards in on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.08 });
+
+        document.querySelectorAll('.step-card').forEach(card => observer.observe(card));
+    </script>
+
+</body>
+
+</html>
