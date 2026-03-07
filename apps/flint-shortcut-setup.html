@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flint | Shortcut Setup Guide</title>
     <meta name="description" content="Step-by-step guide to setting up your Flint NFC shortcut in iOS.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
     <style>
         /* ---- Reset & Base ---- */
         *,
@@ -20,32 +18,31 @@
         }
 
         :root {
-            --amber: #f59e0b;
+            --amber: var(--flint-color);
             --amber-dark: #d97706;
             --amber-glow: rgba(245, 158, 11, 0.18);
-            --bg: #0a0a0a;
-            --surface: #111111;
-            --surface-2: #181818;
-            --border: rgba(255, 255, 255, 0.08);
-            --text: #f0f0f0;
-            --text-muted: rgba(240, 240, 240, 0.55);
-            --radius-card: 20px;
+            --bg: var(--bg-color);
+            --surface: var(--surface-color);
+            --surface-2: rgba(255, 255, 255, 0.05);
+            /* slightly lighter than surface */
+            --border: var(--surface-border);
+            --text: var(--text-primary);
+            --text-muted: var(--text-secondary);
+            --radius-card: 24px;
             --radius-img: 16px;
-            --transition: 0.22s ease;
+            --transition: var(--transition-normal);
         }
 
         html {
             scroll-behavior: smooth;
         }
 
+        /* Body inherits font and background from global styles.css */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+            background: var(--bg-color);
+            /* Overrides global gradient if preferred, but let's keep it simple */
         }
+
 
         /* ---- Layout ---- */
         .page-wrap {

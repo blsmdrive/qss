@@ -7,42 +7,9 @@
     <title>Checkout | Flint Card</title>
     <meta http-equiv="refresh" content="0; url=https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00">
     <link rel="stylesheet" href="../css/styles.css">
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-        }
-
-        .redirect-msg {
-            max-width: 400px;
-        }
-
-        .redirect-msg p {
-            margin: 1rem auto 0;
-        }
-
-        .spinner-lg {
-            width: 48px;
-            height: 48px;
-            border: 3px solid rgba(245, 158, 11, 0.2);
-            border-top-color: #f59e0b;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 1.5rem;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
 </head>
 
-<body>
+<body class="redirect-layout">
     <div class="redirect-msg">
         <div class="spinner-lg"></div>
         <h2>Taking you to <span class="text-gradient-flint">secure checkout…</span></h2>
