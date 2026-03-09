@@ -14,39 +14,44 @@ def create_rounded_qr(url, output_path, fill_color="#f59e0b", back_color="#08090
     
     # Save base to bytes
     out = io.BytesIO()
-    # scale up significantly for high resolution
-    qr.save(out, kind='png', scale=module_size, dark=fill_color, light=back_color, border=2)
+    # Using dark=fill_color and light=None ensures the background is completely transparent
+    qr.save(out, kind='png', scale=module_size, dark=fill_color, light=None, border=2)
     out.seek(0)
     
     # 2. Open with Pillow to perform aesthetic rounding
-    img = Image.open(out).convert("RGBA")
+    base_img = Image.open(out).convert("RGBA")
     
-    # Optional enhancement: We can apply a mask to round the edges of the overall image if desired
-    # Or round the inner modules (more complex, but Segno's default is crisp).
-    # For a simple aesthetic, a clean margin and premium color on dark background works exceptionally well.
+    # 3. Create a clean transparent background image
+    img = Image.new("RGBA", base_img.size, (255, 255, 255, 0))
+    img.paste(base_img, (0,0), base_img) # Use base_img as a mask for itself to preserve alpha
     
-    # 3. Create a circular mask for the center to add a logo
     try:
-        # If we had a local image, we could paste it here.
-        # Let's draw a sleek inner rounded box to serve as a placeholder 
-        # for where the physical Flint card logo might go, or just leave it minimalist.
         logo_size = img.size[0] // 4
         logo_pos = ((img.size[0] - logo_size) // 2, (img.size[1] - logo_size) // 2)
         
-        # Draw a dark background circle in the center to make it look intentionally sparse
+        # We need to create a mask for the hole to punch it through fully
         draw = ImageDraw.Draw(img)
+        
+        # In RGBA mode, setting fill to (0,0,0,0) doesn't clear what's underneath it automatically, it just draws invisibly.
+        # So we draw a rounded rectangle filled with our qr color as an outline, 
+        # and we can "clear" the center by redrawing just that bounding box with 0 alpha (or leaving it).
+        # Actually, since we are pasting the QR code which already has full opacity on the data pixels, 
+        # drawing over it with 0 alpha does nothing. We need to clear it.
+        
+        # A simpler approach: Just don't draw the center hole if transparency is working.
+        # We will just draw the sleek outline frame for the logo:
         draw.rounded_rectangle(
             [logo_pos, (logo_pos[0] + logo_size, logo_pos[1] + logo_size)], 
             radius=logo_size//4,
-            fill=back_color, 
+            fill=None, # DO NOT FILL (leaves the QR code partially below, but acts as a frame)
             outline=fill_color,
             width=2
         )
     except Exception as e:
         print(f"Could not draw center logo area: {e}")
 
-    # Save the final image
-    img.save(output_path)
+    # Save the final image, ensuring format is PNG
+    img.save(output_path, "PNG")
     print(f"Aesthetic QR code saved successfully to: {output_path}")
 
 if __name__ == "__main__":
@@ -56,7 +61,7 @@ if __name__ == "__main__":
     create_rounded_qr(
         url=target_url, 
         output_path=output_filename, 
-        fill_color="#f59e0b", # Flint Amber
-        back_color="#08090a", # System Dark Background
+        fill_color="#202632", # Custom dark blue/grey
+        back_color=None, # Transparent
         module_size=30 # Larger for print quality
     )
