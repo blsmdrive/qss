@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Flint | Reclaim Your Focus Instantly</title>
+    <meta name="description" content="Download the Flint app to start reclaiming your focus instantly.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* ---- Dedicated Download Page Styles ---- */
+        .download-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding-top: 80px;
+            /* Offset for nav */
+            padding-bottom: 40px;
+        }
+
+        .download-hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150vw;
+            height: 150vh;
+            background: radial-gradient(circle at center, rgba(245, 158, 11, 0.15) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .download-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem;
+        }
+
+        .app-icon-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 28px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .download-content h1 {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .download-content p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 320px;
+        }
+
+        .app-store-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: #000;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 0.6rem 1.25rem;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            width: 100%;
+            max-width: 240px;
+        }
+
+        .app-store-btn:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: #111;
+        }
+
+        .btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1;
+        }
+
+        .btn-small {
+            font-size: 0.65rem;
+            opacity: 0.8;
+            margin-bottom: 0.15rem;
+        }
+
+        .btn-large {
+            font-size: 1.15rem;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-simple {
+            position: absolute;
+            bottom: 2rem;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                Quiet Stack Studios
+                <span style="color: rgba(255,255,255,0.3); margin: 0 0.5rem; font-weight: 300;">/</span>
+                <span style="color: var(--flint-color, #f59e0b); font-weight: 700;">Flint</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html#apps">Apps</a>
+                <a href="../support.html">Support</a>
+                <a href="https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00" class="btn-nav-buy" target="_blank"
+                    rel="noopener"
+                    style="background: var(--flint-gradient); color: #000; font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1.25rem; border-radius: 100px; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35); text-decoration: none;">Buy
+                    Card</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="download-hero">
+        <div class="download-content reveal active">
+            <img src="../assets/flint_dark_logo.png" alt="Flint Logo" class="app-icon-large">
+
+            <h1 class="text-gradient-flint">Get Flint</h1>
+            <p>Reclaim your focus instantly. Download the app to get started.</p>
+
+            <a href="#" class="app-store-btn" id="app-store-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 384 512"
+                    fill="currentColor">
+                    <path
+                        d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
+                </svg>
+                <div class="btn-text">
+                    <span class="btn-small">Download on the</span>
+                    <span class="btn-large">App Store</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer-simple">
+            &copy; 2026 Quiet Stack Studios
+        </div>
+    </main>
+</body>
+
+</html>
