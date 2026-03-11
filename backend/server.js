@@ -151,6 +151,34 @@ app.post('/api/webhook', async (req, res) => {
   res.send();
 });
 
+// 4. Admin route to manually set inventory (e.g. back to 0 or up to 50)
+app.post('/api/admin/set-inventory', async (req, res) => {
+  const { newCount, adminSecret } = req.body;
+
+  // Protect this route from the public!
+  if (adminSecret !== process.env.STRIPE_WEBHOOK_SECRET) {
+      return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  if (typeof newCount !== 'number' || newCount < 0) {
+      return res.status(400).json({ error: 'Invalid count. Must be 0 or higher.' });
+  }
+
+  try {
+      await pool.query(`
+          UPDATE inventory 
+          SET stock_count = $1 
+          WHERE product_name = 'flint_card'
+      `, [newCount]);
+
+      console.log(`Manually updated inventory to ${newCount}`);
+      res.json({ success: true, newCount });
+  } catch (err) {
+      console.error('Failed to manually update inventory:', err);
+      res.status(500).json({ error: 'Database update failed' });
+  }
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
