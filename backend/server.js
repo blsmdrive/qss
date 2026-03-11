@@ -88,7 +88,7 @@ app.post('/api/checkout', async (req, res) => {
       line_items: [
         {
           price_data: {
-            currency: 'usd',
+            currency: 'aud',
             product_data: {
               name: 'Flint Card',
               description: 'The smart NFC card that reclaims your focus instantly.',
