@@ -592,8 +592,9 @@
             <div class="nav-links">
                 <a href="../index.html#apps">Apps</a>
                 <a href="../support.html">Support</a>
-                <a href="https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00" class="btn-nav-buy" id="nav-buy-btn"
-                    target="_blank" rel="noopener">Buy — $24.99</a>
+                <button class="btn-nav-buy checkout-btn" id="nav-buy-btn"
+                    style="border:none; cursor:pointer;" 
+                    onclick="handleCheckout()">Buy — $24.99</button>
             </div>
         </div>
     </nav>
@@ -611,14 +612,16 @@
                 <p class="reveal" style="transition-delay: 0.2s;">The Flint Card is a smart card that
                     instantly locks your phone and blocks distracting apps. Just tap and focus.</p>
                 <div class="hero-actions reveal" style="transition-delay: 0.3s;">
-                    <a href="https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00" class="btn btn-flint btn-lg"
-                        id="hero-buy-btn" target="_blank" rel="noopener">Buy Now — $24.99</a>
+                    <button class="btn btn-flint btn-lg checkout-btn"
+                        id="hero-buy-btn" 
+                        style="border:none; cursor:pointer;"
+                        onclick="handleCheckout()">Buy Now — $24.99</button>
                     <a href="#how-it-works" class="btn btn-secondary btn-lg">How It Works</a>
                 </div>
                 <p class="hero-price reveal" style="transition-delay: 0.4s;">Free shipping · Flint app included ·
                     Works with iPhone</p>
-                <div class="reveal stock-nudge" style="transition-delay: 0.45s;">
-                    <span class="stock-dot"></span> Limited stock
+                <div class="reveal stock-nudge" id="stock-display" style="transition-delay: 0.45s;">
+                    <span class="stock-dot"></span> Loading stock...
                 </div>
             </div>
             <div class="hero-image-wrapper reveal" style="transition-delay: 0.2s;">

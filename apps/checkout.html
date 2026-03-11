@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout | Flint Card</title>
-    <meta http-equiv="refresh" content="0; url=https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00">
+    <!-- Removed static meta refresh to Stripe Checkout -->
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 
@@ -14,13 +14,38 @@
         <div class="spinner-lg"></div>
         <h2>Taking you to <span class="text-gradient-flint">secure checkout…</span></h2>
         <p>You'll be redirected to Stripe's secure payment page momentarily.</p>
-        <p style="margin-top:1.5rem; font-size:0.85rem;">
-            <a href="https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00" style="color: var(--flint-color);">Click here
-                if you are not redirected</a>
+        <p style="margin-top:1.5rem; font-size:0.85rem;" id="checkout-error">
         </p>
     </div>
     <script>
-        window.location.replace('https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00');
+        // Initiate Dynamic Checkout
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+            ? 'http://localhost:3000' 
+            : 'https://quiet-stack-backend.onrender.com';
+
+        async function initCheckout() {
+            try {
+                const response = await fetch(`${API_URL}/api/checkout`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.url) {
+                    window.location.replace(data.url);
+                } else {
+                    throw new Error(data.error || 'Checkout initialization failed');
+                }
+            } catch (err) {
+                console.error(err);
+                document.getElementById('checkout-error').innerHTML = 
+                    `<span style="color:var(--text-secondary);">Error: We couldn't prepare your checkout at this time. Please return to the <a href="flint.html" style="color:var(--flint-color);">Flint page</a> and try again.</span>`;
+                document.querySelector('.spinner-lg').style.display = 'none';
+            }
+        }
+
+        window.onload = initCheckout;
     </script>
 </body>
 
