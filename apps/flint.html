@@ -844,9 +844,10 @@
             <p>One card. One tap. Zero distractions.</p>
             <div class="cta-price text-gradient-flint">$24.99</div>
             <p class="cta-price-note">Includes Flint Card + Flint App · Free Shipping</p>
-            <a href="https://buy.stripe.com/test_4gM6oGeOtexhdr3dGYfIs00" class="btn btn-flint btn-lg" target="_blank"
-                rel="noopener">Order Now</a>
-            <p class="stock-nudge" style="margin-top: 0.75rem;"><span class="stock-dot"></span> Limited stock</p>
+            <button class="btn btn-flint btn-lg checkout-btn" 
+                style="border:none; cursor:pointer;"
+                onclick="handleCheckout()">Order Now</button>
+            <p class="stock-nudge" id="stock-display" style="margin-top: 0.75rem;"><span class="stock-dot"></span> Loading stock...</p>
             <div class="trust-badges">
                 <span class="trust-badge">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
