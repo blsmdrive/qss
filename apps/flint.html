@@ -883,6 +883,127 @@
     </footer>
 
     <script src="../js/main.js"></script>
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Fetch Live Inventory
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+            ? 'http://localhost:3000' 
+            : 'https://quiet-stack-backend.onrender.com';
+
+        async function fetchInventory() {
+            const stockDisplays = document.querySelectorAll('.stock-display');
+            if (stockDisplays.length === 0) return;
+
+            try {
+                const response = await fetch(`${API_URL}/api/inventory`);
+                if (!response.ok) throw new Error('API Error');
+                
+                const data = await response.json();
+                
+                if (data.stock > 0) {
+                    stockDisplays.forEach(display => {
+                        display.innerHTML = `<span class="stock-dot"></span> Only ${data.stock} cards available`;
+                    });
+                } else {
+                    stockDisplays.forEach(display => {
+                        display.innerHTML = `<span class="stock-dot" style="background:#ef4444;"></span> Out of stock`;
+                    });
+                    // Disable buy buttons
+                    document.querySelectorAll('.checkout-btn').forEach(btn => {
+                        btn.disabled = true;
+                        btn.innerText = 'Sold Out';
+                        btn.style.opacity = '0.5';
+                        btn.style.cursor = 'not-allowed';
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to load stock count:", error);
+                stockDisplays.forEach(display => {
+                    display.innerHTML = `<span class="stock-dot"></span> Limited stock`;
+                });
+            }
+        }
+
+        // Handle Checkout Request
+        async function handleCheckout() {
+            const btns = document.querySelectorAll('.checkout-btn');
+            
+            // Show loading state on buttons
+            btns.forEach(btn => {
+                const originalText = btn.innerText;
+                btn.dataset.originalText = originalText;
+                btn.innerText = 'Redirecting...';
+                btn.disabled = true;
+            });
+
+            try {
+                const response = await fetch(`${API_URL}/api/checkout`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.url) {
+                    // Redirect to Stripe Checkout Session
+                    window.location.href = data.url;
+                } else {
+                    throw new Error(data.error || 'Checkout failed');
+                }
+            } catch (error) {
+                console.error("Checkout Request Failed:", error);
+                alert("Sorry, we couldn't initiate checkout right now. Please try again later.");
+                
+                // Revert buttons
+                btns.forEach(btn => {
+                    btn.innerText = btn.dataset.originalText;
+                    btn.disabled = false;
+                });
+            }
+        }
+
+        // Call on page load
+        document.addEventListener('DOMContentLoaded', fetchInventory);
+    </script>
+    <!-- Intersection Observer for simple reveal animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                reveals.forEach(r => observer.observe(r));
+            } else {
+                reveals.forEach(r => r.classList.add('visible'));
+            }
+
+            const faqQs = document.querySelectorAll('.faq-question');
+            faqQs.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const ans = btn.nextElementSibling;
+                    const c = btn.querySelector('.faq-chevron');
+                    const isOpen = ans.style.display === 'block';
+
+                    document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+                    document.querySelectorAll('.faq-chevron').forEach(ch => ch.style.transform = 'rotate(0deg)');
+
+                    if (!isOpen) {
+                        ans.style.display = 'block';
+                        c.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
