@@ -93,7 +93,7 @@ app.post('/api/checkout', async (req, res) => {
               name: 'Flint Card',
               description: 'The smart NFC card that reclaims your focus instantly.',
             },
-            unit_amount: 2499, // $24.99 in cents
+            unit_amount: 3499, // $34.99 in cents
           },
           quantity: 1,
         },
