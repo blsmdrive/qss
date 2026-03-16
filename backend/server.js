@@ -87,14 +87,7 @@ app.post('/api/checkout', async (req, res) => {
       payment_method_types: ['card'],
       line_items: [
         {
-          price_data: {
-            currency: 'aud',
-            product_data: {
-              name: 'Flint Card',
-              description: 'The smart NFC card that reclaims your focus instantly.',
-            },
-            unit_amount: 3499, // $34.99 in cents
-          },
+          price: 'price_1TBUJZFjgAChorBgmtiGo0rD',
           quantity: 1,
         },
       ],
