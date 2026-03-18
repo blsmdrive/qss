@@ -28,6 +28,9 @@
   --verdant-color: #10b981;
   /* Emerald */
   --verdant-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --oxyn-color: #4F8C75;
+  /* Teal-Sage */
+  --oxyn-gradient: linear-gradient(135deg, #2E4B6E 0%, #4F8C75 100%);
 
   /* Typography */
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -117,6 +120,13 @@ h1 {
 
 .text-gradient-verdant {
   background: var(--verdant-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-oxyn {
+  background: var(--oxyn-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -247,6 +257,18 @@ nav.scrolled {
 .btn-verdant:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+}
+
+.btn-oxyn {
+  background: var(--oxyn-gradient);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(46, 75, 110, 0.4);
+}
+
+.btn-oxyn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(79, 140, 117, 0.5);
 }
 
 .btn-coffee {
