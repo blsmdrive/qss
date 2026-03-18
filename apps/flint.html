@@ -592,8 +592,7 @@
             <div class="nav-links">
                 <a href="../index.html#apps">Apps</a>
                 <a href="../support.html">Support</a>
-                <button class="btn-nav-buy checkout-btn" id="nav-buy-btn"
-                    style="border:none; cursor:pointer;" 
+                <button class="btn-nav-buy checkout-btn" id="nav-buy-btn" style="border:none; cursor:pointer;"
                     onclick="handleCheckout()">Buy — $34.99</button>
             </div>
         </div>
@@ -612,10 +611,8 @@
                 <p class="reveal" style="transition-delay: 0.2s;">The Flint Card is a smart card that
                     instantly locks your phone and blocks distracting apps. Just tap and focus.</p>
                 <div class="hero-actions reveal" style="transition-delay: 0.3s;">
-                    <button class="btn btn-flint btn-lg checkout-btn"
-                        id="hero-buy-btn" 
-                        style="border:none; cursor:pointer;"
-                        onclick="handleCheckout()">Buy Now — $34.99</button>
+                    <button class="btn btn-flint btn-lg checkout-btn" id="hero-buy-btn"
+                        style="border:none; cursor:pointer;" onclick="handleCheckout()">Buy Now — $34.99</button>
                     <a href="#how-it-works" class="btn btn-secondary btn-lg">How It Works</a>
                 </div>
                 <p class="hero-price reveal" style="transition-delay: 0.4s;">Free shipping · Flint app included ·
@@ -625,7 +622,7 @@
                 </div>
             </div>
             <div class="hero-image-wrapper reveal" style="transition-delay: 0.2s;">
-                <img src="../assets/flint_card_mockup.png" alt="Flint NFC Card" class="hero-product-img">
+                <img src="../assets/flint-stone-lean.jpg" alt="Flint NFC Card" class="hero-product-img">
             </div>
         </div>
     </section>
@@ -729,7 +726,7 @@
         <p class="reveal" style="margin: 0 auto;">A credit-card-sized physical anchor for your digital wellbeing.</p>
         <div class="showcase-layout">
             <div class="showcase-img-wrapper reveal">
-                <img src="../assets/flint_card_mockup.png" alt="Flint NFC Card Product" class="showcase-img">
+                <img src="../assets/flint-stone-surround.png" alt="Flint NFC Card Product" class="showcase-img">
                 <span class="showcase-badge">No Battery Required</span>
             </div>
             <div class="showcase-specs reveal" style="transition-delay: 0.15s;">
@@ -844,10 +841,10 @@
             <p>One card. One tap. Zero distractions.</p>
             <div class="cta-price text-gradient-flint">$34.99</div>
             <p class="cta-price-note">Includes Flint Card + Flint App · Free Shipping</p>
-            <button class="btn btn-flint btn-lg checkout-btn" 
-                style="border:none; cursor:pointer;"
+            <button class="btn btn-flint btn-lg checkout-btn" style="border:none; cursor:pointer;"
                 onclick="handleCheckout()">Order Now</button>
-            <p class="stock-nudge stock-display" style="margin-top: 0.75rem;"><span class="stock-dot"></span> Loading stock...</p>
+            <p class="stock-nudge stock-display" style="margin-top: 0.75rem;"><span class="stock-dot"></span> Loading
+                stock...</p>
             <div class="trust-badges">
                 <span class="trust-badge">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -886,8 +883,8 @@
     <!-- ===== JAVASCRIPT ===== -->
     <script>
         // Fetch Live Inventory
-        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-            ? 'http://localhost:3000' 
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
             : 'https://quiet-stack-backend.onrender.com';
 
         async function fetchInventory() {
@@ -897,9 +894,9 @@
             try {
                 const response = await fetch(`${API_URL}/api/inventory`);
                 if (!response.ok) throw new Error('API Error');
-                
+
                 const data = await response.json();
-                
+
                 if (data.stock > 0) {
                     stockDisplays.forEach(display => {
                         display.innerHTML = `<span class="stock-dot"></span> Only ${data.stock} cards available`;
@@ -927,7 +924,7 @@
         // Handle Checkout Request
         async function handleCheckout() {
             const btns = document.querySelectorAll('.checkout-btn');
-            
+
             // Show loading state on buttons
             btns.forEach(btn => {
                 const originalText = btn.innerText;
@@ -955,7 +952,7 @@
             } catch (error) {
                 console.error("Checkout Request Failed:", error);
                 alert("Sorry, we couldn't initiate checkout right now. Please try again later.");
-                
+
                 // Revert buttons
                 btns.forEach(btn => {
                     btn.innerText = btn.dataset.originalText;

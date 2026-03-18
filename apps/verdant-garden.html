@@ -4,55 +4,552 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verdant Garden | Quiet Stack Studios</title>
-    <meta name="description" content="Verdant Garden - Your personal digital greenhouse.">
+    <title>Verdant Garden | Your Personal Plant Companion</title>
+    <meta name="description"
+        content="Verdant Garden — The AI-powered plant companion app. Snap a photo, identify any plant, and get personalised care guides. Free on the App Store.">
     <link rel="stylesheet" href="../css/styles.css">
     <style>
-        .app-header {
-            padding-top: 120px;
-            padding-bottom: 4rem;
+        /* ---- Hero ---- */
+        .verdant-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+        }
+
+        .verdant-hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle at 30% 40%, rgba(16, 185, 129, 0.12) 0%, transparent 55%),
+                radial-gradient(circle at 70% 60%, rgba(5, 150, 105, 0.08) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        /* ---- Nav Download Button ---- */
+        .btn-nav-download {
+            background: var(--verdant-gradient);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+            transition: all var(--transition-normal);
+        }
+
+        .nav-links .btn-nav-download,
+        .nav-links .btn-nav-download:hover {
+            color: #000;
+        }
+
+        .btn-nav-download:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .hero-image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ---- Emoji Showcase ---- */
+        .emoji-showcase {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 280px;
+            height: 280px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            font-size: 8rem;
+            animation: glow-pulse-drop-verdant 3s ease-in-out infinite;
+        }
+
+        .disclaimer {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            margin-top: 1rem;
+        }
+
+        /* ---- Social Proof ---- */
+        .social-proof {
+            padding: 3rem 0;
+            border-top: 1px solid var(--surface-border);
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .proof-item h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .proof-item p {
+            font-size: 0.95rem;
+            margin: 0 auto;
+        }
+
+        /* ---- How It Works ---- */
+        .how-section {
             text-align: center;
         }
 
-        .app-icon-large {
-            width: 120px;
-            height: 120px;
-            border-radius: 30px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
-            margin-bottom: 2rem;
+        .how-section h2 {
+            margin-bottom: 0.5rem;
         }
 
+        .step-card .glass-panel {
+            padding: 2.5rem 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-card .glass-panel:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .step-number {
+            background: var(--verdant-gradient);
+            color: #000;
+        }
+
+        .steps-grid {
+            position: relative;
+        }
+
+        .step-connector {
+            display: none;
+        }
+
+        @media (min-width: 769px) {
+            .how-section .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .step-connector {
+                display: block;
+                position: absolute;
+                top: calc(2.5rem + 28px);
+                right: -2rem;
+                width: 2rem;
+                height: 2px;
+                background: linear-gradient(90deg, rgba(16, 185, 129, 0.5), rgba(16, 185, 129, 0.15));
+                z-index: 2;
+            }
+
+            .step-card:last-child .step-connector {
+                display: none;
+            }
+        }
+
+        /* ---- Features ---- */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
         }
 
         .feature-card {
-            background: var(--surface-color);
-            border: 1px solid var(--surface-border);
-            border-radius: 20px;
-            padding: 2rem;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
-        .screenshot-placeholder {
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 30px;
+            height: 3px;
+            background: var(--verdant-gradient);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* ---- App Showcase ---- */
+        .showcase {
+            text-align: center;
+            position: relative;
+        }
+
+        .showcase-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .showcase-img-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .showcase-emoji {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 240px;
+            height: 240px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            font-size: 6rem;
+            animation: glow-pulse-drop-verdant 3s ease-in-out infinite;
+        }
+
+        @keyframes glow-pulse-drop-verdant {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 50px rgba(16, 185, 129, 0.6));
+            }
+        }
+
+        .showcase-badge {
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--verdant-gradient);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .showcase-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .spec-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .spec-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .spec-row h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .spec-row p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .showcase-layout {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                text-align: center;
+            }
+
+            .spec-row {
+                text-align: left;
+            }
+        }
+
+        /* ---- FAQ ---- */
+        .faq-section h2,
+        .faq-section>p {
+            text-align: center;
+        }
+
+        .faq-question:hover {
+            color: var(--verdant-color);
+        }
+
+        /* ---- Final CTA ---- */
+        .cta-section {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-panel {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+            border-color: rgba(16, 185, 129, 0.2);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+        }
+
+        .cta-panel:hover {
+            transform: none;
+        }
+
+        .cta-panel h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta-panel p {
+            margin: 0 auto 2rem;
+        }
+
+        .cta-price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .cta-price-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .trust-badge {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
-            margin: 4rem auto;
-            max-width: 800px;
-            border: 1px dashed var(--surface-border);
+        }
+
+        .trust-badge svg {
+            opacity: 0.6;
+        }
+
+        /* ---- Desktop / Large Monitor Adjustments ---- */
+        @media (min-width: 1025px) {
+            .verdant-hero {
+                padding-top: 80px;
+            }
+
+            .hero-grid {
+                gap: 5rem;
+            }
+
+            .emoji-showcase {
+                width: 320px;
+                height: 320px;
+                font-size: 10rem;
+            }
+
+            .cta-panel {
+                padding: 5rem 4rem;
+                max-width: 800px;
+            }
+
+            .features-grid {
+                gap: 2rem;
+            }
+        }
+
+        /* ---- Laptop / Tablet Adjustments ---- */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-grid {
+                gap: 2rem;
+            }
+
+            .emoji-showcase {
+                width: 240px;
+                height: 240px;
+                font-size: 7rem;
+            }
+
+            .step-card .glass-panel {
+                padding: 1.5rem 1rem;
+            }
+
+            .step-connector {
+                display: none;
+            }
+
+            .btn-lg {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .hero-subtitle {
+                margin-top: 2rem;
+            }
+
+            .hero-actions {
+                gap: 1.5rem 1rem;
+            }
+        }
+
+        /* ---- Global Spacing Fixes ---- */
+        section {
+            padding: 4rem 0;
+        }
+
+        .hero-subtitle {
+            margin-top: 1.5rem;
+        }
+
+        .steps-grid,
+        .features-grid,
+        .proof-grid {
+            margin-bottom: 3rem;
+        }
+
+        .showcase-badge {
+            bottom: -24px;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .verdant-hero {
+                min-height: auto;
+                padding-top: 90px;
+                padding-bottom: 3rem;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+                align-items: center;
+            }
+
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-subtitle {
+                text-align: center;
+            }
+
+            .emoji-showcase {
+                width: 200px;
+                height: 200px;
+                font-size: 6rem;
+            }
+
+            .hero-image-wrapper {
+                order: -1;
+            }
+
+            .proof-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .cta-panel {
+                padding: 3rem 2rem;
+            }
+
+            .cta-price {
+                font-size: 2.5rem;
+            }
+
+            .trust-badges {
+                gap: 1rem;
+            }
         }
 
         footer {
@@ -91,46 +588,272 @@
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                 </svg>
                 Quiet Stack Studios
+                <span style="color: rgba(255,255,255,0.3); margin: 0 0.5rem; font-weight: 300;">/</span>
+                <span style="color: var(--verdant-color, #10b981); font-weight: 700;">Verdant Garden</span>
             </a>
             <div class="nav-links">
-                <a href="../index.html#apps" class="active">Apps</a>
+                <a href="../index.html#apps">Apps</a>
                 <a href="../support.html">Support</a>
+                <a href="#" class="btn-nav-download">Download Free</a>
             </div>
         </div>
     </nav>
 
-    <header class="container app-header">
-        <div class="reveal">
-            <img src="../assets/verdant_icon.png" alt="Verdant Garden Icon"
-                style="width: 120px; height: 120px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); margin-bottom: 2rem;">
+    <!-- ===== HERO ===== -->
+    <section class="verdant-hero container">
+        <div class="hero-grid">
+            <div class="hero-text">
+                <div class="reveal">
+                    <img src="../assets/verdant_icon.png" alt="Verdant Garden Icon"
+                        style="width: 64px; height: 64px; border-radius: 16px; margin-bottom: 1.5rem; box-shadow: 0 6px 20px rgba(0,0,0,0.4);">
+                </div>
+                <h1 class="reveal" style="transition-delay: 0.1s;">Identify any plant<br><span
+                        class="text-gradient-verdant">instantly.</span></h1>
+                <p class="reveal" style="transition-delay: 0.2s;">Verdant Garden is your AI-powered plant companion.
+                    Snap a photo, identify any plant, and get personalised care guides* — all for free.</p>
+                <div class="hero-actions reveal" style="transition-delay: 0.3s;">
+                    <a href="#" class="btn btn-verdant btn-lg">Download Free on App Store</a>
+                    <a href="#how-it-works" class="btn btn-secondary btn-lg">See How It Works</a>
+                </div>
+                <p class="hero-subtitle reveal" style="transition-delay: 0.4s;">Free to download · Available on iPhone ·
+                    Made in Australia</p>
+                <p class="disclaimer reveal" style="transition-delay: 0.45s;">*Identification accuracy may vary. Results
+                    are AI-generated and should be verified.</p>
+            </div>
+            <div class="hero-image-wrapper reveal" style="transition-delay: 0.2s;">
+                <div class="emoji-showcase">🌿</div>
+            </div>
         </div>
-        <h1 class="reveal" style="transition-delay: 0.1s;">Verdant Garden</h1>
-        <p class="reveal" style="margin: 0 auto; transition-delay: 0.2s;">Track, manage, and care for your plants with
-            beautiful logs.</p>
-        <div class="reveal" style="margin-top: 2rem; transition-delay: 0.3s;">
-            <a href="#" class="btn btn-primary"
-                style="background: #10b981; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);">Download on App Store</a>
-        </div>
-    </header>
+    </section>
 
-    <section class="container reveal">
-        <div class="screenshot-placeholder">
-            <img src="../assets/verdant_mockup.png" alt="Verdant Garden Concept"
-                style="width: 100%; height: 100%; object-fit: cover; border-radius: 30px;">
+    <!-- ===== SOCIAL PROOF ===== -->
+    <section class="social-proof container reveal">
+        <div class="proof-grid">
+            <div class="proof-item">
+                <h3 class="text-gradient-verdant">77,000+</h3>
+                <p>Species identifiable via Pl@ntNet</p>
+            </div>
+            <div class="proof-item">
+                <h3 class="text-gradient-verdant">1 Snap</h3>
+                <p>To identify any plant instantly</p>
+            </div>
+            <div class="proof-item">
+                <h3 class="text-gradient-verdant">100%</h3>
+                <p>Free — no subscriptions, no paywalls</p>
+            </div>
         </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section id="how-it-works" class="container how-section">
+        <h2 class="reveal">How It Works</h2>
+        <p class="reveal" style="margin: 0 auto;">Three simple steps to identify and care for any plant.</p>
+
+        <div class="steps-grid">
+            <div class="step-card reveal">
+                <div class="step-connector"></div>
+                <div class="glass-panel">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">📸</div>
+                    <h3>Snap a Photo</h3>
+                    <p>Open Verdant Garden and point your camera at any plant. Our AI identification engine does the
+                        rest.</p>
+                </div>
+            </div>
+            <div class="step-card reveal" style="transition-delay: 0.1s;">
+                <div class="step-connector"></div>
+                <div class="glass-panel">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🔍</div>
+                    <h3>Get an Instant ID</h3>
+                    <p>Powered by the Pl@ntNet API, Verdant identifies your plant from thousands of species with
+                        confidence scores.</p>
+                </div>
+            </div>
+            <div class="step-card reveal" style="transition-delay: 0.2s;">
+                <div class="glass-panel">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">🌱</div>
+                    <h3>Start Caring</h3>
+                    <p>Add the plant to My Garden, set watering reminders, and get personalised care tips.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="container">
+        <h2 class="reveal" style="text-align: center;">Why Verdant Garden?</h2>
+        <p class="reveal" style="text-align: center; margin: 0 auto;">Everything you need to identify and nurture your
+            plants.</p>
 
         <div class="features-grid">
-            <div class="feature-card reveal">
-                <h3>Watering Reminders</h3>
-                <p>Never forget to water your plants again with smart, customizable notifications.</p>
+            <div class="glass-panel feature-card reveal">
+                <span class="feature-icon">📸</span>
+                <h3>AI Plant Identification</h3>
+                <p>Snap a photo and let our AI identify your plant. Works with flowers, trees, succulents, and more.*
+                </p>
             </div>
-            <div class="feature-card reveal" style="transition-delay: 0.1s;">
-                <h3>Growth Logs</h3>
-                <p>Take pictures and keep a journal of how your plants are growing over time.</p>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.05s;">
+                <span class="feature-icon">📅</span>
+                <h3>Watering Calendar</h3>
+                <p>Track your watering history with a visual calendar. See when you last watered and when the next one
+                    is due.</p>
             </div>
-            <div class="feature-card reveal" style="transition-delay: 0.2s;">
-                <h3>Light & Soil Tracking</h3>
-                <p>Log all specific parameters for every plant to ensure optimal care environment.</p>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.1s;">
+                <span class="feature-icon">🌱</span>
+                <h3>Care Tips</h3>
+                <p>Get AI-generated care guides tailored to each plant — watering frequency, light needs, and seasonal
+                    advice.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.15s;">
+                <span class="feature-icon">📖</span>
+                <h3>Plant Database</h3>
+                <p>Browse 77,000+ identifiable species with detailed care information and growing tips.</p>
+            </div>
+        </div>
+        <p class="disclaimer reveal" style="text-align: center;">*Identification accuracy may vary depending on photo
+            quality and plant species.</p>
+    </section>
+
+    <!-- ===== APP SHOWCASE ===== -->
+    <section class="container showcase">
+        <h2 class="reveal">The Verdant Garden App</h2>
+        <p class="reveal" style="margin: 0 auto;">Your pocket-sized plant expert — powered by AI, built with care.</p>
+        <div class="showcase-layout">
+            <div class="showcase-img-wrapper reveal">
+                <div class="showcase-emoji">🌿</div>
+                <span class="showcase-badge">Free on App Store</span>
+            </div>
+            <div class="showcase-specs reveal" style="transition-delay: 0.15s;">
+                <div class="spec-row">
+                    <span class="spec-icon">🧠</span>
+                    <div>
+                        <h4>AI-Powered Recognition</h4>
+                        <p>Uses the Pl@ntNet API for identification across thousands of plant species. Results may vary.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">🔒</span>
+                    <div>
+                        <h4>Privacy First</h4>
+                        <p>No account required. Your plant data stays on your device — no tracking, no sign-ups.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">📱</span>
+                    <div>
+                        <h4>iPhone Optimised</h4>
+                        <p>Designed natively for iOS with a clean, intuitive interface that feels right at home.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">🇦🇺</span>
+                    <div>
+                        <h4>Made in Australia</h4>
+                        <p>Lovingly built by a solo indie developer with a passion for plants and great software.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="container faq-section">
+        <h2 class="reveal">Frequently Asked Questions</h2>
+        <div class="faq-list reveal">
+            <div class="faq-item">
+                <button class="faq-question" id="faq-1">
+                    What is Verdant Garden?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Verdant Garden is a free iOS app that helps you identify plants using your camera and manage your
+                        plant collection with a watering calendar, personalised care tips, and a database of 77,000+
+                        species.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-2">
+                    How does plant identification work?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Verdant uses the Pl@ntNet API, a leading botanical recognition engine. Simply take a photo of a
+                        leaf, flower, or whole plant, and the app returns identification results with confidence scores.
+                        Results include confidence levels to help you assess accuracy, but we recommend
+                        cross-referencing for critical decisions.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-3">
+                    Is Verdant Garden really free?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. Verdant Garden is completely free to download and use. There is a daily identification limit
+                        to keep the service sustainable, but all core features — My Garden, watering calendar, and care
+                        tips — are unlimited.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-4">
+                    What devices are supported?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Verdant Garden is available for iPhone running iOS 17 or later. An iPad-optimised version may come
+                        in the future.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-5">
+                    Do I need to create an account?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>No. Verdant Garden works entirely on-device with no sign-up required. Your plant data is stored
+                        locally on your iPhone and stays completely private.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-6">
+                    How many plants can I identify per day?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>There is a daily identification limit to ensure fair and sustainable use of the AI recognition
+                        service. The exact limit is displayed in the app. All other features like My Garden, watering
+                        calendar, and care tips have no limits.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FINAL CTA ===== -->
+    <section class="container cta-section reveal">
+        <div class="glass-panel cta-panel">
+            <h2>Ready to <span class="text-gradient-verdant">Grow</span> Your Garden?</h2>
+            <p>Your personal plant companion — free on the App Store.</p>
+            <div class="cta-price text-gradient-verdant">Free</div>
+            <p class="cta-price-note">No subscriptions. No hidden costs. Just plants.</p>
+            <a href="#" class="btn btn-verdant btn-lg">Download on App Store</a>
+            <div class="trust-badges">
+                <span class="trust-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    Privacy First
+                </span>
+                <span class="trust-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M6.5 6.5a9 9 0 0 1 11 0M3 3a14 14 0 0 1 18 0M8.5 16.5a5 5 0 0 1 7 0M12 20h.01" />
+                    </svg>
+                    77,000+ Species
+                </span>
             </div>
         </div>
     </section>
