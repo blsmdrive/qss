@@ -92,6 +92,10 @@
             align-items: center;
         }
 
+        .hero-image-mobile {
+            display: none;
+        }
+
         /* ---- Emoji Showcase ---- */
         .emoji-showcase {
             display: flex;
@@ -540,8 +544,12 @@
                 height: 200px;
             }
 
-            .hero-image-wrapper {
-                order: -1;
+            .hero-image-mobile {
+                display: flex;
+            }
+
+            .hero-image-desktop {
+                display: none;
             }
 
             .proof-grid {
@@ -621,6 +629,9 @@
                         class="text-gradient-verdant">instantly.</span></h1>
                 <p class="reveal" style="transition-delay: 0.2s;">Verdant Garden is your AI-powered plant companion.
                     Snap a photo, identify any plant, and get personalised care guides* — all for free.</p>
+                <div class="hero-image-wrapper hero-image-mobile reveal" style="transition-delay: 0.25s;">
+                    <div class="emoji-showcase"><img src="../assets/verdant-hand-hero.png" alt="Verdant Garden hero"></div>
+                </div>
                 <div class="hero-actions reveal" style="transition-delay: 0.3s;">
                     <a href="#" class="btn btn-verdant btn-lg">Download Free on App Store</a>
                     <a href="#how-it-works" class="btn btn-secondary btn-lg">See How It Works</a>
@@ -630,7 +641,7 @@
                 <p class="disclaimer reveal" style="transition-delay: 0.45s;">*Identification accuracy may vary. Results
                     are AI-generated and should be verified.</p>
             </div>
-            <div class="hero-image-wrapper reveal" style="transition-delay: 0.2s;">
+            <div class="hero-image-wrapper hero-image-desktop reveal" style="transition-delay: 0.2s;">
                 <div class="emoji-showcase"><img src="../assets/verdant-hand-hero.png" alt="Verdant Garden hero"></div>
             </div>
         </div>

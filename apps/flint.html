@@ -93,6 +93,10 @@
             align-items: center;
         }
 
+        .hero-image-mobile {
+            display: none;
+        }
+
         .hero-product-img {
             max-width: 420px;
             width: 100%;
@@ -518,8 +522,12 @@
                 max-width: 260px;
             }
 
-            .hero-image-wrapper {
-                order: -1;
+            .hero-image-mobile {
+                display: flex;
+            }
+
+            .hero-image-desktop {
+                display: none;
             }
 
             .proof-grid {
@@ -610,6 +618,9 @@
                         class="text-gradient-flint">is power.</span></h1>
                 <p class="reveal" style="transition-delay: 0.2s;">The Flint Card is a smart card that
                     instantly locks your phone and blocks distracting apps. Just tap and focus.</p>
+                <div class="hero-image-wrapper hero-image-mobile reveal" style="transition-delay: 0.25s;">
+                    <img src="../assets/flint-stone-lean.jpg" alt="Flint NFC Card" class="hero-product-img">
+                </div>
                 <div class="hero-actions reveal" style="transition-delay: 0.3s;">
                     <button class="btn btn-flint btn-lg checkout-btn" id="hero-buy-btn"
                         style="border:none; cursor:pointer;" onclick="handleCheckout()">Buy Now — $34.99</button>
@@ -621,7 +632,7 @@
                     <span class="stock-dot"></span> Loading stock...
                 </div>
             </div>
-            <div class="hero-image-wrapper reveal" style="transition-delay: 0.2s;">
+            <div class="hero-image-wrapper hero-image-desktop reveal" style="transition-delay: 0.2s;">
                 <img src="../assets/flint-stone-lean.jpg" alt="Flint NFC Card" class="hero-product-img">
             </div>
         </div>
