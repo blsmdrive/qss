@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Days | Break Free from Bad Habits</title>
+    <meta name="description"
+        content="Clear Days — A habit-breaking app that helps you quit bad habits for good. Track your streak, celebrate milestones, and build a better routine. Free on the App Store.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* ---- Hero ---- */
+        .cleardays-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+        }
+
+        .cleardays-hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle at 30% 40%, rgba(52, 152, 219, 0.12) 0%, transparent 55%),
+                radial-gradient(circle at 70% 60%, rgba(93, 173, 226, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(26, 188, 156, 0.06) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        /* ---- Nav Download Button ---- */
+        .btn-nav-download {
+            background: var(--cleardays-gradient);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 14px rgba(52, 152, 219, 0.35);
+            transition: all var(--transition-normal);
+        }
+
+        .nav-links .btn-nav-download,
+        .nav-links .btn-nav-download:hover {
+            color: #fff;
+        }
+
+        .btn-nav-download:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(93, 173, 226, 0.5);
+        }
+
+        .hero-image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image-mobile {
+            display: none;
+        }
+
+        /* ---- Emoji Showcase ---- */
+        .emoji-showcase {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 280px;
+            height: 280px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(52, 152, 219, 0.15);
+            overflow: hidden;
+            animation: glow-pulse-drop-cleardays 3s ease-in-out infinite;
+        }
+
+        .emoji-showcase img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ---- Social Proof ---- */
+        .social-proof {
+            padding: 3rem 0;
+            border-top: 1px solid var(--surface-border);
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .proof-item h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .proof-item p {
+            font-size: 0.95rem;
+            margin: 0 auto;
+        }
+
+        /* ---- How It Works ---- */
+        .how-section {
+            text-align: center;
+        }
+
+        .how-section h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .step-card .glass-panel {
+            padding: 2.5rem 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-card .glass-panel:hover {
+            border-color: rgba(93, 173, 226, 0.3);
+        }
+
+        .step-number {
+            background: var(--cleardays-gradient);
+            color: #fff;
+        }
+
+        .steps-grid {
+            position: relative;
+        }
+
+        .step-connector {
+            display: none;
+        }
+
+        @media (min-width: 769px) {
+            .how-section .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .step-connector {
+                display: block;
+                position: absolute;
+                top: calc(2.5rem + 28px);
+                right: -2rem;
+                width: 2rem;
+                height: 2px;
+                background: linear-gradient(90deg, rgba(52, 152, 219, 0.5), rgba(93, 173, 226, 0.3), rgba(26, 188, 156, 0.15));
+                z-index: 2;
+            }
+
+            .step-card:last-child .step-connector {
+                display: none;
+            }
+        }
+
+        /* ---- Features ---- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--cleardays-gradient);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* ---- App Showcase ---- */
+        .showcase {
+            text-align: center;
+            position: relative;
+        }
+
+        .showcase-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .showcase-img-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .showcase-emoji {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 240px;
+            height: 240px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(52, 152, 219, 0.15);
+            overflow: hidden;
+            animation: glow-pulse-drop-cleardays 3s ease-in-out infinite;
+        }
+
+        .showcase-emoji img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+            border-radius: 20px;
+        }
+
+        @keyframes glow-pulse-drop-cleardays {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 20px rgba(52, 152, 219, 0.3));
+            }
+
+            33% {
+                filter: drop-shadow(0 0 40px rgba(26, 188, 156, 0.35));
+            }
+
+            66% {
+                filter: drop-shadow(0 0 50px rgba(93, 173, 226, 0.6));
+            }
+        }
+
+        .showcase-badge {
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--cleardays-gradient);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .showcase-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .spec-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .spec-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .spec-row h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .spec-row p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .showcase-layout {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                text-align: center;
+            }
+
+            .spec-row {
+                text-align: left;
+            }
+        }
+
+        /* ---- Category Colors ---- */
+        .category-substance { color: #E74C3C; }
+        .category-digital { color: #3498DB; }
+        .category-food { color: #E67E22; }
+        .category-behavioral { color: #9B59B6; }
+        .category-financial { color: #27AE60; }
+        .category-physical { color: #1ABC9C; }
+
+        .category-pill {
+            display: inline-block;
+            padding: 0.3rem 0.85rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .category-pill-substance {
+            background: rgba(231, 76, 60, 0.12);
+            color: #E74C3C;
+            border: 1px solid rgba(231, 76, 60, 0.25);
+        }
+
+        .category-pill-digital {
+            background: rgba(52, 152, 219, 0.12);
+            color: #3498DB;
+            border: 1px solid rgba(52, 152, 219, 0.25);
+        }
+
+        .category-pill-food {
+            background: rgba(230, 126, 34, 0.12);
+            color: #E67E22;
+            border: 1px solid rgba(230, 126, 34, 0.25);
+        }
+
+        .category-pill-behavioral {
+            background: rgba(155, 89, 182, 0.12);
+            color: #9B59B6;
+            border: 1px solid rgba(155, 89, 182, 0.25);
+        }
+
+        .category-pill-financial {
+            background: rgba(39, 174, 96, 0.12);
+            color: #27AE60;
+            border: 1px solid rgba(39, 174, 96, 0.25);
+        }
+
+        .category-pill-physical {
+            background: rgba(26, 188, 156, 0.12);
+            color: #1ABC9C;
+            border: 1px solid rgba(26, 188, 156, 0.25);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .category-card {
+            padding: 2rem 1.5rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card-substance::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #C0392B, #E74C3C);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .category-card-digital::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #2980B9, #3498DB);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .category-card-food::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #D35400, #E67E22);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .category-card-behavioral::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #8E44AD, #9B59B6);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .category-card-financial::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #1E8449, #27AE60);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .category-card-physical::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #148F77, #1ABC9C);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .category-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .category-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .category-card ul li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.3rem 0;
+        }
+
+        .category-card ul li::before {
+            content: '\00B7';
+            margin-right: 0.5rem;
+            font-weight: 700;
+        }
+
+        .category-card-substance ul li::before { color: #E74C3C; }
+        .category-card-digital ul li::before { color: #3498DB; }
+        .category-card-food ul li::before { color: #E67E22; }
+        .category-card-behavioral ul li::before { color: #9B59B6; }
+        .category-card-financial ul li::before { color: #27AE60; }
+        .category-card-physical ul li::before { color: #1ABC9C; }
+
+        .disclaimer {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            margin-top: 1rem;
+        }
+
+        /* ---- FAQ ---- */
+        .faq-section h2,
+        .faq-section>p {
+            text-align: center;
+        }
+
+        .faq-question:hover {
+            color: var(--cleardays-color);
+        }
+
+        /* ---- Final CTA ---- */
+        .cta-section {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-panel {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(26, 188, 156, 0.04) 50%, rgba(93, 173, 226, 0.05) 100%);
+            border-color: rgba(93, 173, 226, 0.2);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+        }
+
+        .cta-panel:hover {
+            transform: none;
+        }
+
+        .cta-panel h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta-panel p {
+            margin: 0 auto 2rem;
+        }
+
+        .cta-price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .cta-price-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .trust-badge svg {
+            opacity: 0.6;
+        }
+
+        /* ---- Desktop / Large Monitor Adjustments ---- */
+        @media (min-width: 1025px) {
+            .cleardays-hero {
+                padding-top: 80px;
+            }
+
+            .hero-grid {
+                gap: 5rem;
+            }
+
+            .emoji-showcase {
+                width: 320px;
+                height: 320px;
+            }
+
+            .cta-panel {
+                padding: 5rem 4rem;
+                max-width: 800px;
+            }
+
+            .features-grid {
+                gap: 2rem;
+            }
+        }
+
+        /* ---- Laptop / Tablet Adjustments ---- */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-grid {
+                gap: 2rem;
+            }
+
+            .emoji-showcase {
+                width: 240px;
+                height: 240px;
+            }
+
+            .step-card .glass-panel {
+                padding: 1.5rem 1rem;
+            }
+
+            .step-connector {
+                display: none;
+            }
+
+            .btn-lg {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .hero-subtitle {
+                margin-top: 2rem;
+            }
+
+            .hero-actions {
+                gap: 1.5rem 1rem;
+            }
+        }
+
+        /* ---- Global Spacing Fixes ---- */
+        section {
+            padding: 4rem 0;
+        }
+
+        .hero-subtitle {
+            margin-top: 1.5rem;
+        }
+
+        .steps-grid,
+        .features-grid,
+        .proof-grid {
+            margin-bottom: 3rem;
+        }
+
+        .showcase-badge {
+            bottom: -24px;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .cleardays-hero {
+                min-height: auto;
+                padding-top: 90px;
+                padding-bottom: 3rem;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+                align-items: center;
+            }
+
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-subtitle {
+                text-align: center;
+            }
+
+            .emoji-showcase {
+                width: 200px;
+                height: 200px;
+            }
+
+            .hero-image-mobile {
+                display: flex;
+            }
+
+            .hero-image-desktop {
+                display: none;
+            }
+
+            .proof-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .cta-panel {
+                padding: 3rem 2rem;
+            }
+
+            .cta-price {
+                font-size: 2.5rem;
+            }
+
+            .trust-badges {
+                gap: 1rem;
+            }
+        }
+
+        footer {
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--surface-border);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                Quiet Stack Studios
+                <span style="color: rgba(255,255,255,0.3); margin: 0 0.5rem; font-weight: 300;">/</span>
+                <span style="color: var(--cleardays-color, #5DADE2); font-weight: 700;">Clear Days</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html#apps">Apps</a>
+                <a href="../support.html">Support</a>
+                <a href="#" class="btn-nav-download">Download Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="cleardays-hero container">
+        <div class="hero-grid">
+            <div class="hero-text">
+                <div class="reveal">
+                    <img src="../assets/cleardays-logo.png" alt="Clear Days App Icon"
+                        style="width: 64px; height: 64px; border-radius: 16px; margin-bottom: 1.5rem; box-shadow: 0 6px 20px rgba(0,0,0,0.4);">
+                </div>
+                <h1 class="reveal" style="transition-delay: 0.1s;">Break free from bad habits,<br><span
+                        class="text-gradient-cleardays">start fresh today.</span></h1>
+                <p class="reveal" style="transition-delay: 0.2s;">Clear Days helps you quit the habits holding you back.
+                    Track your streak, celebrate milestones, and build a better routine — one day at a time.</p>
+                <div class="hero-image-wrapper hero-image-mobile reveal" style="transition-delay: 0.25s;">
+                    <div class="emoji-showcase"><img src="../assets/cleardays-logo.png" alt="Clear Days hero"></div>
+                </div>
+                <div class="hero-actions reveal" style="transition-delay: 0.3s;">
+                    <a href="#" class="btn btn-cleardays btn-lg">Download Free on App Store</a>
+                    <a href="#how-it-works" class="btn btn-secondary btn-lg">See How It Works</a>
+                </div>
+                <p class="hero-subtitle reveal" style="transition-delay: 0.4s;">Free to download · Available on iPhone ·
+                    Made in Australia</p>
+            </div>
+            <div class="hero-image-wrapper hero-image-desktop reveal" style="transition-delay: 0.2s;">
+                <div class="emoji-showcase"><img src="../assets/cleardays-logo.png" alt="Clear Days hero"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SOCIAL PROOF ===== -->
+    <section class="social-proof container reveal">
+        <div class="proof-grid">
+            <div class="proof-item">
+                <h3 class="text-gradient-cleardays">25+</h3>
+                <p>Habit categories to track</p>
+            </div>
+            <div class="proof-item">
+                <h3 class="text-gradient-cleardays">6</h3>
+                <p>Categories — <span class="category-substance">Substance</span>, <span class="category-digital">Digital</span>, <span class="category-food">Food</span>, <span class="category-behavioral">Behavioral</span>, <span class="category-financial">Financial</span>, <span class="category-physical">Physical</span></p>
+            </div>
+            <div class="proof-item">
+                <h3 class="text-gradient-cleardays">100%</h3>
+                <p>Free — no subscriptions, no paywalls</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section id="how-it-works" class="container how-section">
+        <h2 class="reveal">How It Works</h2>
+        <p class="reveal" style="margin: 0 auto;">Three simple steps to start your journey.</p>
+
+        <div class="steps-grid">
+            <div class="step-card reveal">
+                <div class="step-connector"></div>
+                <div class="glass-panel">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">🎯</div>
+                    <h3>Choose Your Habit</h3>
+                    <p>Pick from 25+ habits across 6 categories — from <span class="category-substance">Smoking</span> and <span class="category-digital">Social Media</span> to <span class="category-behavioral">Procrastination</span> — or create your own.</p>
+                </div>
+            </div>
+            <div class="step-card reveal" style="transition-delay: 0.1s;">
+                <div class="step-connector"></div>
+                <div class="glass-panel">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">📅</div>
+                    <h3>Track Your Days</h3>
+                    <p>Watch your clean streak grow day by day with a live timer counting every second of your progress toward a better you.</p>
+                </div>
+            </div>
+            <div class="step-card reveal" style="transition-delay: 0.2s;">
+                <div class="glass-panel">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">🎉</div>
+                    <h3>Celebrate Milestones</h3>
+                    <p>Hit milestones at 1 day, 1 week, 1 month, and beyond — with confetti celebrations for every achievement along the way.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HABIT CATEGORIES ===== -->
+    <section class="container">
+        <h2 class="reveal" style="text-align: center;">Explore Six Categories</h2>
+        <p class="reveal" style="text-align: center; margin: 0 auto;">Whatever habit you want to break, Clear Days has you covered.</p>
+
+        <div class="categories-grid">
+            <div class="glass-panel category-card category-card-substance reveal">
+                <span class="category-pill category-pill-substance">Substance</span>
+                <h3 class="category-substance" style="margin-top: 1rem;">Break the Cycle</h3>
+                <p>Track your journey away from substance-related habits and take back control.</p>
+                <ul>
+                    <li>Smoking</li>
+                    <li>Alcohol</li>
+                    <li>Vaping</li>
+                    <li>Caffeine</li>
+                    <li>Substances</li>
+                </ul>
+            </div>
+            <div class="glass-panel category-card category-card-digital reveal" style="transition-delay: 0.1s;">
+                <span class="category-pill category-pill-digital">Digital</span>
+                <h3 class="category-digital" style="margin-top: 1rem;">Unplug & Recharge</h3>
+                <p>Reclaim your time from screens and build healthier digital habits.</p>
+                <ul>
+                    <li>Social Media</li>
+                    <li>Gaming</li>
+                    <li>Screen Time</li>
+                    <li>TV/Streaming</li>
+                    <li>Online Shopping</li>
+                </ul>
+            </div>
+            <div class="glass-panel category-card category-card-food reveal" style="transition-delay: 0.2s;">
+                <span class="category-pill category-pill-food">Food & Health</span>
+                <h3 class="category-food" style="margin-top: 1rem;">Eat Better, Feel Better</h3>
+                <p>Build a healthier relationship with food, one day at a time.</p>
+                <ul>
+                    <li>Junk Food</li>
+                    <li>Sugar</li>
+                    <li>Fast Food</li>
+                    <li>Overeating</li>
+                    <li>Snacking</li>
+                </ul>
+            </div>
+            <div class="glass-panel category-card category-card-behavioral reveal" style="transition-delay: 0.3s;">
+                <span class="category-pill category-pill-behavioral">Behavioral</span>
+                <h3 class="category-behavioral" style="margin-top: 1rem;">Rewire Your Patterns</h3>
+                <p>Replace unhelpful habits with positive routines that stick.</p>
+                <ul>
+                    <li>Procrastination</li>
+                    <li>Nail Biting</li>
+                    <li>Perfectionism</li>
+                    <li>Negative Thinking</li>
+                    <li>Complaining</li>
+                </ul>
+            </div>
+            <div class="glass-panel category-card category-card-financial reveal" style="transition-delay: 0.4s;">
+                <span class="category-pill category-pill-financial">Financial</span>
+                <h3 class="category-financial" style="margin-top: 1rem;">Spend Smarter</h3>
+                <p>Take control of your spending habits and build financial discipline.</p>
+                <ul>
+                    <li>Impulse Spending</li>
+                    <li>Gambling</li>
+                    <li>Subscriptions</li>
+                </ul>
+            </div>
+            <div class="glass-panel category-card category-card-physical reveal" style="transition-delay: 0.5s;">
+                <span class="category-pill category-pill-physical">Physical</span>
+                <h3 class="category-physical" style="margin-top: 1rem;">Move & Improve</h3>
+                <p>Break the physical habits that are holding your body back.</p>
+                <ul>
+                    <li>Sedentary Lifestyle</li>
+                    <li>Poor Posture</li>
+                    <li>Late Nights</li>
+                </ul>
+            </div>
+        </div>
+        <p class="disclaimer reveal" style="text-align: center; margin: 1rem auto 0;">Clear Days is a self-tracking tool, not a medical or therapeutic service. It is not intended to diagnose, treat, or replace professional advice for addiction, mental health, or any medical condition. If you are struggling with substance use or other serious habits, please consult a qualified healthcare professional.</p>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="container">
+        <h2 class="reveal" style="text-align: center;">Why Clear Days?</h2>
+        <p class="reveal" style="text-align: center; margin: 0 auto;">Everything you need to break bad habits and build better ones.</p>
+
+        <div class="features-grid">
+            <div class="glass-panel feature-card reveal">
+                <span class="feature-icon">🔥</span>
+                <h3>Streak Tracking</h3>
+                <p>A live day counter tracks every second of your progress. See your current streak, best streak, and total clean time.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.05s;">
+                <span class="feature-icon">🎉</span>
+                <h3>Milestone Celebrations</h3>
+                <p>Celebrate achievements at 1 day, 1 week, 1 month, 6 months, and 1 year with confetti and encouragement.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.1s;">
+                <span class="feature-icon">💪</span>
+                <h3>Relapse Support</h3>
+                <p>Slip-ups happen. Log relapses without judgment and get right back on track — your journey isn't over.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.15s;">
+                <span class="feature-icon">☁️</span>
+                <h3>iCloud Sync</h3>
+                <p>Your data syncs across all your devices automatically with iCloud. Never lose your progress.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.2s;">
+                <span class="feature-icon">📱</span>
+                <h3>Home Screen Widgets</h3>
+                <p>Glance at your streak from your home screen with beautiful widgets that keep you motivated every day.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.25s;">
+                <span class="feature-icon">📊</span>
+                <h3>Analytics Dashboard</h3>
+                <p>View detailed stats, trends, and a calendar heatmap of your progress over time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== APP SHOWCASE ===== -->
+    <section class="container showcase">
+        <h2 class="reveal">The Clear Days App</h2>
+        <p class="reveal" style="margin: 0 auto;">Your personal habit-breaking companion — built with care, designed to keep you going.</p>
+        <div class="showcase-layout">
+            <div class="showcase-img-wrapper reveal">
+                <div class="showcase-emoji"><img src="../assets/cleardays-logo.png" alt="Clear Days app icon"></div>
+                <span class="showcase-badge">Free on App Store</span>
+            </div>
+            <div class="showcase-specs reveal" style="transition-delay: 0.15s;">
+                <div class="spec-row">
+                    <span class="spec-icon">💜</span>
+                    <div>
+                        <h4>Your Why</h4>
+                        <p>Record your personal motivation for quitting and revisit it whenever you need a reminder of why you started.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">🔒</span>
+                    <div>
+                        <h4>Privacy First</h4>
+                        <p>No account required. Your data stays on your device with optional iCloud sync — no tracking, no sign-ups.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">📱</span>
+                    <div>
+                        <h4>iPhone Optimised</h4>
+                        <p>Native SwiftUI design with smooth animations, widgets, and a clean, intuitive interface.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">🇦🇺</span>
+                    <div>
+                        <h4>Made in Australia</h4>
+                        <p>Built by a solo indie developer passionate about helping people improve their lives.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="container faq-section">
+        <h2 class="reveal">Frequently Asked Questions</h2>
+        <div class="faq-list reveal">
+            <div class="faq-item">
+                <button class="faq-question" id="faq-1">
+                    What is Clear Days?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Clear Days is a free iOS app designed to help you break bad habits. Track how long you've been clean from any habit — from <span class="category-substance">smoking</span> and <span class="category-digital">social media</span> to <span class="category-behavioral">procrastination</span> and <span class="category-financial">impulse spending</span>. With streak tracking, milestone celebrations, and a supportive relapse flow, it's your personal companion on the journey to a better you.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-2">
+                    How does streak tracking work?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>When you add a habit, you set your quit date and time. Clear Days then counts every day, hour, minute, and second since you quit. You'll see your current streak, your best streak, total relapses, and your start date — all at a glance from the habit detail screen.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-3">
+                    What happens if I relapse?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Slip-ups are a natural part of breaking habits. Clear Days lets you log a relapse without judgment — your streak resets, but your overall progress and history are preserved. The app encourages you to get back on track with supportive messaging because every fresh start counts.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-4">
+                    Is Clear Days free?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. Clear Days is completely free to download and use. All 25+ habit categories, streak tracking, milestone celebrations, iCloud sync, widgets, and every feature are included at no cost.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-5">
+                    What devices are supported?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Clear Days is available for iPhone running iOS 17 or later. Home screen widgets are included, and your data syncs across devices with iCloud.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-6">
+                    Do I need to create an account?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>No. Clear Days works entirely on-device with no sign-up required. Your data is stored locally on your iPhone and optionally synced via iCloud — completely private and under your control.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FINAL CTA ===== -->
+    <section class="container cta-section reveal">
+        <div class="glass-panel cta-panel">
+            <h2>Ready to <span class="text-gradient-cleardays">start fresh?</span></h2>
+            <p>Your personal habit-breaking companion — free on the App Store.</p>
+            <div class="cta-price text-gradient-cleardays">Free</div>
+            <p class="cta-price-note">No subscriptions. No hidden costs. Just progress.</p>
+            <a href="#" class="btn btn-cleardays btn-lg">Download on App Store</a>
+            <div class="trust-badges">
+                <span class="trust-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    Privacy First
+                </span>
+                <span class="trust-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M8 12l2 2 4-4" />
+                    </svg>
+                    25+ Habits to Track
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="container">
+        <div class="footer-content">
+            <p>&copy; 2026 Quiet Stack Studios. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms of Service</a>
+                <a href="../support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

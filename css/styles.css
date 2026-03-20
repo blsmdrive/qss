@@ -31,6 +31,8 @@
   --oxyn-color: #4F8C75;
   /* Teal-Sage */
   --oxyn-gradient: linear-gradient(135deg, #2E4B6E 0%, #4F8C75 100%);
+  --cleardays-color: #5DADE2;
+  --cleardays-gradient: linear-gradient(135deg, #3498DB 0%, #5DADE2 100%);
 
   /* Typography */
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -127,6 +129,13 @@ h1 {
 
 .text-gradient-oxyn {
   background: var(--oxyn-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cleardays {
+  background: var(--cleardays-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -269,6 +278,17 @@ nav.scrolled {
 .btn-oxyn:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 8px 25px rgba(79, 140, 117, 0.5);
+}
+
+.btn-cleardays {
+  background: var(--cleardays-gradient);
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn-cleardays:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(93, 173, 226, 0.5);
 }
 
 .btn-coffee {
