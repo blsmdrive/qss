@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consilient | Spatial Note-Taking</title>
+    <meta name="description"
+        content="Consilient — A spatial note-taking canvas for iPhone. Arrange folders visually, tag topics to reveal connections between ideas, and sync with iCloud. Free on the App Store.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* ---- Hero ---- */
+        .consilient-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+        }
+
+        .consilient-hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle at 30% 40%, rgba(42, 82, 152, 0.12) 0%, transparent 55%),
+                radial-gradient(circle at 70% 60%, rgba(74, 144, 217, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 126, 200, 0.06) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        /* ---- Nav Download Button ---- */
+        .btn-nav-download {
+            background: var(--consilient-gradient);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 14px rgba(42, 82, 152, 0.35);
+            transition: all var(--transition-normal);
+        }
+
+        .nav-links .btn-nav-download,
+        .nav-links .btn-nav-download:hover {
+            color: #fff;
+        }
+
+        .btn-nav-download:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(74, 144, 217, 0.5);
+        }
+
+        .hero-image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image-mobile {
+            display: none;
+        }
+
+        /* ---- Emoji Showcase ---- */
+        .emoji-showcase {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 280px;
+            height: 280px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(42, 82, 152, 0.15);
+            overflow: hidden;
+            animation: glow-pulse-drop-consilient 3s ease-in-out infinite;
+        }
+
+        .emoji-showcase img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ---- Social Proof ---- */
+        .social-proof {
+            padding: 3rem 0;
+            border-top: 1px solid var(--surface-border);
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .proof-item h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .proof-item p {
+            font-size: 0.95rem;
+            margin: 0 auto;
+        }
+
+        /* ---- How It Works ---- */
+        .how-section {
+            text-align: center;
+        }
+
+        .how-section h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .step-card .glass-panel {
+            padding: 2.5rem 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-card .glass-panel:hover {
+            border-color: rgba(74, 144, 217, 0.3);
+        }
+
+        .step-number {
+            background: var(--consilient-gradient);
+            color: #fff;
+        }
+
+        .steps-grid {
+            position: relative;
+        }
+
+        .step-connector {
+            display: none;
+        }
+
+        @media (min-width: 769px) {
+            .how-section .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .step-connector {
+                display: block;
+                position: absolute;
+                top: calc(2.5rem + 28px);
+                right: -2rem;
+                width: 2rem;
+                height: 2px;
+                background: linear-gradient(90deg, rgba(42, 82, 152, 0.5), rgba(74, 144, 217, 0.3), rgba(139, 126, 200, 0.15));
+                z-index: 2;
+            }
+
+            .step-card:last-child .step-connector {
+                display: none;
+            }
+        }
+
+        /* ---- Features ---- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--consilient-gradient);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* ---- App Showcase ---- */
+        .showcase {
+            text-align: center;
+            position: relative;
+        }
+
+        .showcase-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .showcase-img-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .showcase-emoji {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 240px;
+            height: 240px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(42, 82, 152, 0.15);
+            overflow: hidden;
+            animation: glow-pulse-drop-consilient 3s ease-in-out infinite;
+        }
+
+        .showcase-emoji img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+            border-radius: 20px;
+        }
+
+        @keyframes glow-pulse-drop-consilient {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 20px rgba(42, 82, 152, 0.3));
+            }
+
+            33% {
+                filter: drop-shadow(0 0 40px rgba(74, 144, 217, 0.35));
+            }
+
+            66% {
+                filter: drop-shadow(0 0 50px rgba(139, 126, 200, 0.4));
+            }
+        }
+
+        .showcase-badge {
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--consilient-gradient);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .showcase-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .spec-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .spec-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .spec-row h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .spec-row p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .showcase-layout {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                text-align: center;
+            }
+
+            .spec-row {
+                text-align: left;
+            }
+        }
+
+        /* ---- Category Colors ---- */
+        .category-canvas { color: #4A90D9; }
+        .category-notes { color: #5B8C5A; }
+        .category-sync { color: #8B7EC8; }
+
+        .category-pill {
+            display: inline-block;
+            padding: 0.3rem 0.85rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .category-pill-canvas {
+            background: rgba(74, 144, 217, 0.12);
+            color: #4A90D9;
+            border: 1px solid rgba(74, 144, 217, 0.25);
+        }
+
+        .category-pill-notes {
+            background: rgba(91, 140, 90, 0.12);
+            color: #5B8C5A;
+            border: 1px solid rgba(91, 140, 90, 0.25);
+        }
+
+        .category-pill-sync {
+            background: rgba(139, 126, 200, 0.12);
+            color: #8B7EC8;
+            border: 1px solid rgba(139, 126, 200, 0.25);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .category-card {
+            padding: 2rem 1.5rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card-canvas::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #2A5298, #4A90D9);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .category-card-notes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #3D6B3C, #5B8C5A);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .category-card-sync::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #5E4F9E, #8B7EC8);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .category-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .category-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .category-card ul li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.3rem 0;
+        }
+
+        .category-card ul li::before {
+            content: '\00B7';
+            margin-right: 0.5rem;
+            font-weight: 700;
+        }
+
+        .category-card-canvas ul li::before { color: #4A90D9; }
+        .category-card-notes ul li::before { color: #5B8C5A; }
+        .category-card-sync ul li::before { color: #8B7EC8; }
+
+        /* ---- FAQ ---- */
+        .faq-section h2,
+        .faq-section>p {
+            text-align: center;
+        }
+
+        .faq-question:hover {
+            color: var(--consilient-color);
+        }
+
+        /* ---- Final CTA ---- */
+        .cta-section {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-panel {
+            background: linear-gradient(135deg, rgba(42, 82, 152, 0.1) 0%, rgba(139, 126, 200, 0.04) 50%, rgba(74, 144, 217, 0.05) 100%);
+            border-color: rgba(74, 144, 217, 0.2);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+        }
+
+        .cta-panel:hover {
+            transform: none;
+        }
+
+        .cta-panel h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta-panel p {
+            margin: 0 auto 2rem;
+        }
+
+        .cta-price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .cta-price-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .trust-badge svg {
+            opacity: 0.6;
+        }
+
+        /* ---- Desktop / Large Monitor Adjustments ---- */
+        @media (min-width: 1025px) {
+            .consilient-hero {
+                padding-top: 80px;
+            }
+
+            .hero-grid {
+                gap: 5rem;
+            }
+
+            .emoji-showcase {
+                width: 320px;
+                height: 320px;
+            }
+
+            .cta-panel {
+                padding: 5rem 4rem;
+                max-width: 800px;
+            }
+
+            .features-grid {
+                gap: 2rem;
+            }
+        }
+
+        /* ---- Laptop / Tablet Adjustments ---- */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-grid {
+                gap: 2rem;
+            }
+
+            .emoji-showcase {
+                width: 240px;
+                height: 240px;
+            }
+
+            .step-card .glass-panel {
+                padding: 1.5rem 1rem;
+            }
+
+            .step-connector {
+                display: none;
+            }
+
+            .btn-lg {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .hero-subtitle {
+                margin-top: 2rem;
+            }
+
+            .hero-actions {
+                gap: 1.5rem 1rem;
+            }
+        }
+
+        /* ---- Global Spacing Fixes ---- */
+        section {
+            padding: 4rem 0;
+        }
+
+        .hero-subtitle {
+            margin-top: 1.5rem;
+        }
+
+        .steps-grid,
+        .features-grid,
+        .proof-grid {
+            margin-bottom: 3rem;
+        }
+
+        .showcase-badge {
+            bottom: -24px;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .consilient-hero {
+                min-height: auto;
+                padding-top: 90px;
+                padding-bottom: 3rem;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+                align-items: center;
+            }
+
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-subtitle {
+                text-align: center;
+            }
+
+            .emoji-showcase {
+                width: 200px;
+                height: 200px;
+            }
+
+            .hero-image-mobile {
+                display: flex;
+            }
+
+            .hero-image-desktop {
+                display: none;
+            }
+
+            .proof-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .cta-panel {
+                padding: 3rem 2rem;
+            }
+
+            .cta-price {
+                font-size: 2.5rem;
+            }
+
+            .trust-badges {
+                gap: 1rem;
+            }
+        }
+
+        footer {
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--surface-border);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                Quiet Stack Studios
+                <span style="color: rgba(255,255,255,0.3); margin: 0 0.5rem; font-weight: 300;">/</span>
+                <span style="color: var(--consilient-color, #4A90D9); font-weight: 700;">Consilient</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html#apps">Apps</a>
+                <a href="../support.html">Support</a>
+                <a href="#" class="btn-nav-download">Download Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="consilient-hero container">
+        <div class="hero-grid">
+            <div class="hero-text">
+                <div class="reveal">
+                    <img src="../assets/consilient-logo.png" alt="Consilient App Icon"
+                        style="width: 64px; height: 64px; border-radius: 16px; margin-bottom: 1.5rem; box-shadow: 0 6px 20px rgba(0,0,0,0.4);">
+                </div>
+                <h1 class="reveal" style="transition-delay: 0.1s;">Organize your thoughts,<br><span
+                        class="text-gradient-consilient">spatially.</span></h1>
+                <p class="reveal" style="transition-delay: 0.2s;">Consilient is your spatial note-taking canvas. Arrange folders on a zoomable workspace, tag your ideas, and watch connections emerge between related topics — all synced seamlessly with iCloud.</p>
+                <div class="hero-image-wrapper hero-image-mobile reveal" style="transition-delay: 0.25s;">
+                    <div class="emoji-showcase"><img src="../assets/consilient-logo.png" alt="Consilient hero"></div>
+                </div>
+                <div class="hero-actions reveal" style="transition-delay: 0.3s;">
+                    <a href="#" class="btn btn-consilient btn-lg">Download Free on App Store</a>
+                    <a href="#how-it-works" class="btn btn-secondary btn-lg">See How It Works</a>
+                </div>
+                <p class="hero-subtitle reveal" style="transition-delay: 0.4s;">Free to download · Available on iPhone ·
+                    Syncs with iCloud</p>
+            </div>
+            <div class="hero-image-wrapper hero-image-desktop reveal" style="transition-delay: 0.2s;">
+                <div class="emoji-showcase"><img src="../assets/consilient-logo.png" alt="Consilient hero"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section id="how-it-works" class="container how-section">
+        <h2 class="reveal">How It Works</h2>
+        <p class="reveal" style="margin: 0 auto;">Three simple steps to start organising spatially.</p>
+
+        <div class="steps-grid">
+            <div class="step-card reveal">
+                <div class="step-connector"></div>
+                <div class="glass-panel">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">🗂️</div>
+                    <h3>Create Your Canvas</h3>
+                    <p>Open Consilient and start with a blank spatial canvas. Create folders, assign colors and emojis, and position them anywhere you like.</p>
+                </div>
+            </div>
+            <div class="step-card reveal" style="transition-delay: 0.1s;">
+                <div class="step-connector"></div>
+                <div class="glass-panel">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🔗</div>
+                    <h3>Connect & Organise</h3>
+                    <p>Tag your folders and watch as Consilient maps the relationships between them. Visual connections appear automatically between topics that share tags — turning your canvas into a living knowledge map.</p>
+                </div>
+            </div>
+            <div class="step-card reveal" style="transition-delay: 0.2s;">
+                <div class="glass-panel">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">☁️</div>
+                    <h3>Sync Everywhere</h3>
+                    <p>Your entire canvas syncs in real time via Apple CloudKit. Pick up right where you left off on any iPhone signed into your iCloud account.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURE GROUPS ===== -->
+    <section class="container">
+        <h2 class="reveal" style="text-align: center;">Explore Three Pillars</h2>
+        <p class="reveal" style="text-align: center; margin: 0 auto;">Everything you need to organise your notes, your way.</p>
+
+        <div class="categories-grid">
+            <div class="glass-panel category-card category-card-canvas reveal">
+                <span class="category-pill category-pill-canvas">Canvas</span>
+                <h3 class="category-canvas" style="margin-top: 1rem;">Think in Space</h3>
+                <p>A zoomable, pannable 2D canvas where your folders live as spatial objects you can arrange freely.</p>
+                <ul>
+                    <li>Zoomable canvas (0.3x – 3.0x)</li>
+                    <li>Drag-and-drop folder positioning</li>
+                    <li>Visual connections between related topics</li>
+                    <li>Canvas stats overlay</li>
+                </ul>
+            </div>
+            <div class="glass-panel category-card category-card-notes reveal" style="transition-delay: 0.1s;">
+                <span class="category-pill category-pill-notes">Notes</span>
+                <h3 class="category-notes" style="margin-top: 1rem;">Capture Everything</h3>
+                <p>Notes with auto-save, photo and document attachments, and powerful full-text search.</p>
+                <ul>
+                    <li>Note editing with auto-save</li>
+                    <li>Photo and document attachments</li>
+                    <li>Camera capture</li>
+                    <li>Global full-text search</li>
+                </ul>
+            </div>
+            <div class="glass-panel category-card category-card-sync reveal" style="transition-delay: 0.2s;">
+                <span class="category-pill category-pill-sync">Sync</span>
+                <h3 class="category-sync" style="margin-top: 1rem;">Always in Sync</h3>
+                <p>Real-time CloudKit synchronisation keeps your notes, folders, and canvas state up to date across your iPhones.</p>
+                <ul>
+                    <li>Apple CloudKit real-time sync</li>
+                    <li>Soft delete with consolidated trash</li>
+                    <li>Color-coded tags with autocomplete</li>
+                    <li>System, Light, and Dark themes</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="container">
+        <h2 class="reveal" style="text-align: center;">Why Consilient?</h2>
+        <p class="reveal" style="text-align: center; margin: 0 auto;">Everything you need to think spatially and stay organised.</p>
+
+        <div class="features-grid">
+            <div class="glass-panel feature-card reveal">
+                <span class="feature-icon">🗺️</span>
+                <h3>Spatial Canvas</h3>
+                <p>Arrange folders on a 2D canvas you can zoom (0.3x–3.0x) and pan freely. See the big picture or zoom into details.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.05s;">
+                <span class="feature-icon">🏷️</span>
+                <h3>Tags & Search</h3>
+                <p>Color-coded tags with autocomplete and global full-text search across every note, folder, and attachment.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.1s;">
+                <span class="feature-icon">☁️</span>
+                <h3>CloudKit Sync</h3>
+                <p>Your notes, folders, and canvas layout sync in real time via Apple CloudKit across your iPhone devices.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.15s;">
+                <span class="feature-icon">📎</span>
+                <h3>Rich Attachments</h3>
+                <p>Attach photos, documents, and camera captures directly to your notes. Everything stays organised.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== APP SHOWCASE ===== -->
+    <section class="container showcase">
+        <h2 class="reveal">The Consilient App</h2>
+        <p class="reveal" style="margin: 0 auto;">Tag your topics. See the connections. Watch your knowledge graph grow.</p>
+        <div class="showcase-layout">
+            <div class="showcase-img-wrapper reveal">
+                <div class="showcase-emoji"><img src="../assets/consilient-logo.png" alt="Consilient app icon"></div>
+                <span class="showcase-badge">Free on App Store</span>
+            </div>
+            <div class="showcase-specs reveal" style="transition-delay: 0.15s;">
+                <div class="spec-row">
+                    <span class="spec-icon">🧭</span>
+                    <div>
+                        <h4>Expansive Canvas</h4>
+                        <p>A large-format 2D workspace where you position folders spatially. Tag them, and visual connections reveal how your ideas relate to each other.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">🔒</span>
+                    <div>
+                        <h4>Privacy & Sync</h4>
+                        <p>Your data syncs securely via Apple CloudKit. No third-party servers, no tracking, no sign-ups required.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">📱</span>
+                    <div>
+                        <h4>iPhone Optimised</h4>
+                        <p>Built natively for iOS with SwiftUI, featuring smooth animations, haptic feedback, and a Floating Action Button for quick access.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">🇦🇺</span>
+                    <div>
+                        <h4>Made in Australia</h4>
+                        <p>Crafted by a solo indie developer who believes note-taking should be spatial, visual, and effortless.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="container faq-section">
+        <h2 class="reveal">Frequently Asked Questions</h2>
+        <div class="faq-list reveal">
+            <div class="faq-item">
+                <button class="faq-question" id="faq-1">
+                    What is Consilient?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Consilient is a free iOS note-taking app built around a spatial canvas. Instead of a linear list, your folders live on a 2D canvas you can zoom, pan, and arrange freely. Tag your folders and Consilient automatically reveals visual connections between related topics — turning your notes into a knowledge map. Add attachments, search across everything, and sync it all in real time via Apple CloudKit.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-2">
+                    How does the spatial canvas work?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Your canvas is a 2D workspace where folders appear as draggable objects. You can zoom from 0.3x to 3.0x, pan in any direction, and tag your folders to reveal visual connections between related topics. It's like a whiteboard that maps the relationships between your ideas — the more you tag, the more your knowledge graph grows.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-3">
+                    Does Consilient sync across devices?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. Consilient uses Apple CloudKit for real-time synchronisation. Your notes, folders, tags, canvas layout, and connections sync automatically across your iPhone devices signed into the same iCloud account.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-4">
+                    What can I attach to notes?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>You can attach photos from your library, capture new photos with your camera, and add documents directly to any note. All attachments sync via CloudKit alongside your note content.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-5">
+                    What devices are supported?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Consilient is available for iPhone running iOS 17 or later. Your data syncs via iCloud so you always have access to your notes.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-6">
+                    Is my data private?
+                    <span class="faq-chevron">&#9660;</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. Consilient syncs exclusively through Apple CloudKit — your data lives in your personal iCloud account. There are no third-party servers, no analytics tracking, and no account sign-up required.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FINAL CTA ===== -->
+    <section class="container cta-section reveal">
+        <div class="glass-panel cta-panel">
+            <h2>Ready to <span class="text-gradient-consilient">think spatially?</span></h2>
+            <p>Your spatial note-taking canvas — free on the App Store.</p>
+            <div class="cta-price text-gradient-consilient">Free</div>
+            <p class="cta-price-note">No subscriptions. No hidden costs. Just organise.</p>
+            <a href="#" class="btn btn-consilient btn-lg">Download on App Store</a>
+            <div class="trust-badges">
+                <span class="trust-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    Privacy First
+                </span>
+                <span class="trust-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M8 12l2 2 4-4" />
+                    </svg>
+                    CloudKit Sync
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="container">
+        <div class="footer-content">
+            <p>&copy; 2026 Quiet Stack Studios. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms of Service</a>
+                <a href="../support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

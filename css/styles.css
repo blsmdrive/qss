@@ -33,6 +33,8 @@
   --oxyn-gradient: linear-gradient(135deg, #2E4B6E 0%, #4F8C75 100%);
   --cleardays-color: #5DADE2;
   --cleardays-gradient: linear-gradient(135deg, #3498DB 0%, #5DADE2 100%);
+  --consilient-color: #4A90D9;
+  --consilient-gradient: linear-gradient(135deg, #2A5298 0%, #4A90D9 100%);
 
   /* Typography */
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -136,6 +138,13 @@ h1 {
 
 .text-gradient-cleardays {
   background: var(--cleardays-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-consilient {
+  background: var(--consilient-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -289,6 +298,18 @@ nav.scrolled {
 .btn-cleardays:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 8px 25px rgba(93, 173, 226, 0.5);
+}
+
+.btn-consilient {
+  background: var(--consilient-gradient);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(42, 82, 152, 0.4);
+}
+
+.btn-consilient:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(74, 144, 217, 0.5);
 }
 
 .btn-coffee {
