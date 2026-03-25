@@ -581,6 +581,11 @@
                 transform: scale(0.75);
             }
         }
+
+        .checkout-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed !important;
+        }
     </style>
 </head>
 
@@ -601,7 +606,7 @@
                 <a href="../index.html#apps">Apps</a>
                 <a href="../support.html">Support</a>
                 <button class="btn-nav-buy checkout-btn" id="nav-buy-btn" style="border:none; cursor:pointer;"
-                    onclick="handleCheckout()">Buy — $34.99</button>
+                    disabled onclick="handleCheckout()">Buy — $34.99</button>
             </div>
         </div>
     </nav>
@@ -623,7 +628,7 @@
                 </div>
                 <div class="hero-actions reveal" style="transition-delay: 0.3s;">
                     <button class="btn btn-flint btn-lg checkout-btn" id="hero-buy-btn"
-                        style="border:none; cursor:pointer;" onclick="handleCheckout()">Buy Now — $34.99</button>
+                        style="border:none; cursor:pointer;" disabled onclick="handleCheckout()">Buy Now — $34.99</button>
                     <a href="#how-it-works" class="btn btn-secondary btn-lg">How It Works</a>
                 </div>
                 <p class="hero-price reveal" style="transition-delay: 0.4s;">Free shipping · Flint app included ·
@@ -853,7 +858,7 @@
             <div class="cta-price text-gradient-flint">$34.99</div>
             <p class="cta-price-note">Includes Flint Card + Flint App · Free Shipping</p>
             <button class="btn btn-flint btn-lg checkout-btn" style="border:none; cursor:pointer;"
-                onclick="handleCheckout()">Order Now</button>
+                disabled onclick="handleCheckout()">Order Now</button>
             <p class="stock-nudge stock-display" style="margin-top: 0.75rem;"><span class="stock-dot"></span> Loading
                 stock...</p>
             <div class="trust-badges">
@@ -911,6 +916,10 @@
                 if (data.stock > 0) {
                     stockDisplays.forEach(display => {
                         display.innerHTML = `<span class="stock-dot"></span> Only ${data.stock} cards available`;
+                    });
+                    // Enable buy buttons
+                    document.querySelectorAll('.checkout-btn').forEach(btn => {
+                        btn.disabled = false;
                     });
                 } else {
                     stockDisplays.forEach(display => {

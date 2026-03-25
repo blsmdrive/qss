@@ -3,12 +3,39 @@ const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware for enabling CORS
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:5500',
+  'http://127.0.0.1:5500',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
+// Global Rate Limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests from this IP, please try again after 15 minutes' }
+});
+
+app.use(limiter);
 
 // We need raw bodies for Stripe Webhook verification
 app.use((req, res, next) => {
@@ -149,12 +176,12 @@ app.post('/api/admin/set-inventory', async (req, res) => {
   const { newCount, adminSecret } = req.body;
 
   // Protect this route from the public!
-  if (adminSecret !== process.env.STRIPE_WEBHOOK_SECRET) {
+  if (adminSecret !== process.env.ADMIN_SECRET) {
       return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  if (typeof newCount !== 'number' || newCount < 0) {
-      return res.status(400).json({ error: 'Invalid count. Must be 0 or higher.' });
+  if (!Number.isInteger(newCount) || newCount < 0) {
+      return res.status(400).json({ error: 'Invalid count. Must be 0 or higher integer.' });
   }
 
   try {
