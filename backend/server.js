@@ -119,6 +119,9 @@ app.post('/api/checkout', async (req, res) => {
         },
       ],
       mode: 'payment',
+      shipping_address_collection: {
+        allowed_countries: ['AU'],
+      },
       success_url: `${domainURL}/apps/flint-download.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${domainURL}/apps/flint.html`,
       // Custom metadata to identify the product being purchased in the webhook
