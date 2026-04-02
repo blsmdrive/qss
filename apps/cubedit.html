@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cubedit | Precision Color Grading for iPhone</title>
+    <meta name="description"
+        content="Cubedit — A premium color grading workspace for photographers and filmmakers. Apply LUTs, adjust tone curves, and export studio-quality images and video. Free to download on the App Store.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* ---- Cubedit Brand Tokens ---- */
+        :root {
+            --cubedit-bg:       #1A1814;
+            --cubedit-surface:  #24221E;
+            --cubedit-accent:   #C4A882;
+            --cubedit-gold:     linear-gradient(135deg, #C4A882 0%, #8C6D44 100%);
+            --cubedit-gold-rev: linear-gradient(135deg, #8C6D44 0%, #C4A882 100%);
+            --cubedit-border:   rgba(196, 168, 130, 0.12);
+        }
+
+        /* ---- Hero ---- */
+        .cubedit-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+        }
+
+        .cubedit-hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background:
+                radial-gradient(circle at 25% 35%, rgba(196, 168, 130, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 75% 65%, rgba(140, 109, 68, 0.05) 0%, transparent 45%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Fine grain noise texture overlay */
+        .cubedit-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* ---- Nav CTA ---- */
+        .btn-nav-cubedit {
+            background: var(--cubedit-gold);
+            color: #0d0b09;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 4px 14px rgba(196, 168, 130, 0.25);
+            transition: all var(--transition-normal);
+        }
+
+        .nav-links .btn-nav-cubedit,
+        .nav-links .btn-nav-cubedit:hover {
+            color: #0d0b09;
+        }
+
+        .btn-nav-cubedit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(196, 168, 130, 0.4);
+        }
+
+        /* ---- Cubedit Buttons ---- */
+        .btn-cubedit {
+            background: var(--cubedit-gold);
+            color: #0d0b09;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(196, 168, 130, 0.3);
+        }
+
+        .btn-cubedit:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(196, 168, 130, 0.45);
+            color: #0d0b09;
+        }
+
+        /* ---- Text Gradient ---- */
+        .text-gradient-cubedit {
+            background: var(--cubedit-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ---- Hero Showcase (App Icon hero display) ---- */
+        .hero-image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image-mobile { display: none; }
+
+        .app-icon-hero {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app-icon-display {
+            width: 280px;
+            height: 280px;
+            border-radius: 60px;
+            overflow: hidden;
+            position: relative;
+            animation: cubedit-float 5s ease-in-out infinite, glow-pulse-cubedit 4s ease-in-out infinite;
+            border: 1px solid rgba(196, 168, 130, 0.15);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(196, 168, 130, 0.1);
+        }
+
+        .app-icon-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Orbit ring decoration */
+        .orbit-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(196, 168, 130, 0.08);
+            animation: orbit-spin 20s linear infinite;
+        }
+
+        .orbit-ring-1 {
+            width: 360px;
+            height: 360px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orbit-ring-2 {
+            width: 440px;
+            height: 440px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-direction: reverse;
+            animation-duration: 30s;
+            border-style: dashed;
+            opacity: 0.5;
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--cubedit-accent);
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.6;
+        }
+
+        @keyframes orbit-spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes cubedit-float {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-12px); }
+        }
+
+        @keyframes glow-pulse-cubedit {
+            0%, 100% { box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(196, 168, 130, 0.08); }
+            50%       { box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 80px rgba(196, 168, 130, 0.18); }
+        }
+
+        /* ---- Section Label (editorial caps) ---- */
+        .section-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--cubedit-accent);
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        /* ---- Social Proof ---- */
+        .social-proof {
+            padding: 3.5rem 0;
+            border-top: 1px solid var(--surface-border);
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .proof-item h3 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.03em;
+        }
+
+        .proof-item p {
+            font-size: 0.9rem;
+            margin: 0 auto;
+        }
+
+        /* ---- How It Works ---- */
+        .how-section { text-align: center; }
+        .how-section h2 { margin-bottom: 0.5rem; }
+
+        .step-card .glass-panel {
+            padding: 2.5rem 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-color: var(--cubedit-border);
+            background: rgba(36, 34, 30, 0.6);
+        }
+
+        .step-card .glass-panel:hover {
+            border-color: rgba(196, 168, 130, 0.25);
+        }
+
+        .step-number {
+            background: var(--cubedit-gold);
+            color: #0d0b09;
+        }
+
+        .steps-grid { position: relative; }
+        .step-connector { display: none; }
+
+        @media (min-width: 769px) {
+            .how-section .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .step-connector {
+                display: block;
+                position: absolute;
+                top: calc(2.5rem + 28px);
+                right: -2rem;
+                width: 2rem;
+                height: 1px;
+                background: linear-gradient(90deg, rgba(196,168,130,0.4), rgba(196,168,130,0.08));
+                z-index: 2;
+            }
+
+            .step-card:last-child .step-connector { display: none; }
+        }
+
+        /* ---- Features Grid ---- */
+        .features-section h2 { text-align: center; }
+        .features-section > p  { text-align: center; margin: 0 auto; }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
+        }
+
+        .feature-card {
+            padding: 1.75rem;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: rgba(36, 34, 30, 0.5);
+            border-color: var(--cubedit-border);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: var(--cubedit-gold);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-card:hover {
+            border-color: rgba(196, 168, 130, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .feature-card p {
+            font-size: 0.92rem;
+            margin-bottom: 0;
+        }
+
+        /* ---- Editing Tabs Showcase ---- */
+        .tools-section {
+            text-align: center;
+            position: relative;
+        }
+
+        .tools-visual {
+            margin-top: 3rem;
+            background: rgba(36, 34, 30, 0.7);
+            border: 1px solid var(--cubedit-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tools-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(196, 168, 130, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        /* Fake iOS editor UI */
+        .editor-mockup {
+            background: #1A1814;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(196,168,130,0.1);
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .editor-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(196,168,130,0.08);
+        }
+
+        .editor-nav-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(242, 237, 232, 0.5);
+        }
+
+        .editor-nav-action {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--cubedit-accent);
+            opacity: 0.9;
+        }
+
+        .editor-image-area {
+            height: 160px;
+            background: linear-gradient(135deg, #2a2420 0%, #1e1b17 50%, #251f18 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Fake photo color grade bands */
+        .photo-bands {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .band {
+            flex: 1;
+            transition: opacity 0.3s;
+        }
+
+        .editor-panel {
+            padding: 16px 20px 20px;
+        }
+
+        .editor-tabs {
+            display: flex;
+            gap: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(196,168,130,0.08);
+            margin-bottom: 16px;
+            justify-content: center;
+        }
+
+        .editor-tab {
+            font-size: 0.6rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(242,237,232,0.35);
+            padding-bottom: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .editor-tab.active {
+            color: rgba(242,237,232,0.9);
+        }
+
+        .editor-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 1.5px;
+            background: var(--cubedit-accent);
+            border-radius: 2px;
+        }
+
+        .editor-sliders {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .editor-slider-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slider-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(242,237,232,0.4);
+            width: 72px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .slider-track {
+            flex: 1;
+            height: 2px;
+            background: rgba(196,168,130,0.12);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider-fill {
+            height: 100%;
+            background: linear-gradient(90deg, rgba(196,168,130,0.3), var(--cubedit-accent));
+            border-radius: 2px;
+            transition: width 0.4s ease;
+        }
+
+        .slider-thumb {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--cubedit-accent);
+            box-shadow: 0 0 8px rgba(196,168,130,0.5);
+        }
+
+        .slider-value {
+            font-size: 0.6rem;
+            color: rgba(242,237,232,0.3);
+            width: 28px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* animated slider highlight */
+        @keyframes slider-demo {
+            0%, 100% { width: 55%; }
+            40% { width: 72%; }
+            70% { width: 38%; }
+        }
+
+        .slider-fill.anim-1 { animation: slider-demo 4s ease-in-out infinite; }
+
+        /* ---- LUT showcase ---- */
+        .lut-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .lut-chip {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .lut-chip:hover {
+            transform: scale(1.06);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
+
+        .lut-chip.active {
+            box-shadow: 0 0 0 2px var(--cubedit-accent), 0 4px 16px rgba(196,168,130,0.2);
+        }
+
+        .lut-chip-label {
+            position: absolute;
+            bottom: 4px; left: 0; right: 0;
+            text-align: center;
+            font-size: 0.45rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ---- Showcase (split comparison) ---- */
+        .showcase {
+            text-align: center;
+            position: relative;
+        }
+
+        .showcase-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .showcase-img-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Split comparison visual */
+        .comparison-visual {
+            width: 100%;
+            max-width: 380px;
+            height: 260px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--cubedit-border);
+            animation: glow-pulse-cubedit 4s ease-in-out infinite;
+        }
+
+        .comparison-before {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #3a3530 0%, #2c2720 50%, #3d3228 100%);
+            filter: saturate(0.6) brightness(0.9);
+        }
+
+        .comparison-after {
+            position: absolute;
+            inset: 0;
+            left: 50%;
+            background: linear-gradient(135deg, #4a3820 0%, #3a2d1a 40%, #5c4225 100%);
+            filter: saturate(1.4) brightness(1.05) contrast(1.1);
+        }
+
+        .comparison-divider {
+            position: absolute;
+            top: 0; bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: white;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        .comparison-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .comparison-handle svg {
+            width: 14px;
+            height: 14px;
+            color: #555;
+        }
+
+        .comparison-labels {
+            position: absolute;
+            bottom: 12px;
+            left: 0; right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 12px;
+            z-index: 5;
+        }
+
+        .comp-label {
+            font-size: 0.55rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            background: rgba(0,0,0,0.4);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .showcase-badge {
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--cubedit-gold);
+            color: #0d0b09;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 0.4rem 1.25rem;
+            border-radius: 100px;
+            white-space: nowrap;
+            letter-spacing: 0.04em;
+        }
+
+        .showcase-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .spec-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .spec-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .spec-row h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .spec-row p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        /* ---- Pro Section ---- */
+        .pro-section {
+            text-align: center;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            padding: 2rem 1.75rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: rgba(36, 34, 30, 0.5);
+            border-color: var(--cubedit-border);
+            text-align: left;
+        }
+
+        .pricing-card.featured {
+            border-color: rgba(196, 168, 130, 0.35);
+            background: rgba(196, 168, 130, 0.04);
+        }
+
+        .pricing-card.featured::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--cubedit-gold);
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: rgba(196,168,130,0.15);
+            color: var(--cubedit-accent);
+            border: 1px solid rgba(196,168,130,0.25);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-tier {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.25rem;
+        }
+
+        .pricing-cadence {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+            flex: 1;
+        }
+
+        .pricing-features li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            padding: 0.35rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .pricing-features li:last-child { border-bottom: none; }
+
+        .pricing-features li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--cubedit-accent);
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+
+        /* ---- FAQ ---- */
+        .faq-section h2,
+        .faq-section > p { text-align: center; }
+
+        .faq-question:hover { color: var(--cubedit-accent); }
+
+        /* ---- Final CTA ---- */
+        .cta-section {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-panel {
+            background: linear-gradient(135deg, rgba(196, 168, 130, 0.06) 0%, rgba(140, 109, 68, 0.03) 100%);
+            border-color: rgba(196, 168, 130, 0.2);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+        }
+
+        .cta-panel:hover { transform: none; }
+
+        .cta-panel h2 { margin-bottom: 1rem; }
+
+        .cta-panel p { margin: 0 auto 2rem; }
+
+        .cta-free {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.03em;
+        }
+
+        .cta-note {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.06em;
+        }
+
+        .trust-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--cubedit-accent);
+            opacity: 0.5;
+        }
+
+        /* ---- Global section spacing ---- */
+        section { padding: 4rem 0; }
+
+        .steps-grid,
+        .features-grid,
+        .proof-grid { margin-bottom: 3rem; }
+
+        .showcase-badge { bottom: -24px; }
+
+        /* ---- Desktop ---- */
+        @media (min-width: 1025px) {
+            .cubedit-hero { padding-top: 80px; }
+            .hero-grid { gap: 5rem; }
+            .app-icon-display { width: 320px; height: 320px; }
+            .cta-panel { padding: 5rem 4rem; max-width: 800px; }
+        }
+
+        /* ---- Tablet ---- */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-grid { gap: 2rem; }
+            .app-icon-display { width: 240px; height: 240px; border-radius: 50px; }
+            .orbit-ring-1 { width: 300px; height: 300px; }
+            .orbit-ring-2 { width: 370px; height: 370px; }
+            .step-connector { display: none; }
+            .btn-lg { padding: 0.875rem 1.5rem; font-size: 1rem; }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+        }
+
+        /* ---- Mobile ---- */
+        @media (max-width: 768px) {
+            .cubedit-hero {
+                min-height: auto;
+                padding-top: 90px;
+                padding-bottom: 3rem;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+                align-items: center;
+            }
+
+            .hero-text p { margin-left: auto; margin-right: auto; }
+            .hero-actions { justify-content: center; }
+            .hero-subtitle { text-align: center; }
+
+            .app-icon-display { width: 200px; height: 200px; border-radius: 44px; }
+            .orbit-ring-1 { width: 270px; height: 270px; }
+            .orbit-ring-2 { width: 330px; height: 330px; }
+
+            .hero-image-mobile { display: flex; }
+            .hero-image-desktop { display: none; }
+
+            .proof-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .showcase-layout { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+            .spec-row { text-align: left; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .cta-panel { padding: 3rem 2rem; }
+            .cta-free { font-size: 2rem; }
+            .trust-badges { gap: 1rem; }
+            .lut-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        /* ---- Footer ---- */
+        footer {
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--surface-border);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover { color: var(--text-primary); }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                Quiet Stack Studios
+                <span style="color: rgba(255,255,255,0.3); margin: 0 0.5rem; font-weight: 300;">/</span>
+                <span style="color: var(--cubedit-accent); font-weight: 700;">Cubedit</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html#apps">Apps</a>
+                <a href="#features">Features</a>
+                <a href="../support.html">Support</a>
+                <a href="https://apps.apple.com" class="btn-nav-cubedit" id="nav-download-btn">Download Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="cubedit-hero container">
+        <div class="hero-grid">
+            <div class="hero-text">
+                <div class="reveal">
+                    <span class="section-label">Photography &amp; Video</span>
+                </div>
+                <div class="reveal">
+                    <img src="../assets/cubedit-icon.png" alt="Cubedit App Icon"
+                        style="width: 72px; height: 72px; border-radius: 18px; margin-bottom: 1.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,168,130,0.1);">
+                </div>
+                <h1 class="reveal" style="transition-delay: 0.1s;">Grade like a<br><span
+                        class="text-gradient-cubedit">cinematographer.</span></h1>
+                <p class="reveal" style="transition-delay: 0.2s;">Cubedit is a precision color grading workspace for
+                    photographers and filmmakers. Apply LUTs, sculpt tone curves, and fine-tune every frame — all
+                    from your iPhone.</p>
+                <div class="hero-image-wrapper hero-image-mobile reveal" style="transition-delay: 0.25s;">
+                    <div class="app-icon-hero">
+                        <div class="orbit-ring orbit-ring-1"><div class="orbit-dot"></div></div>
+                        <div class="orbit-ring orbit-ring-2"></div>
+                        <div class="app-icon-display">
+                            <img src="../assets/cubedit-icon.png" alt="Cubedit">
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-actions reveal" style="transition-delay: 0.3s;">
+                    <a href="https://apps.apple.com" class="btn btn-cubedit btn-lg" id="hero-download-btn">Download Free on App Store</a>
+                    <a href="#features" class="btn btn-secondary btn-lg">Explore Features</a>
+                </div>
+                <p class="hero-subtitle reveal" style="transition-delay: 0.4s;">Free to download &middot; Pro unlock available &middot; iPhone &amp; iOS 17+</p>
+            </div>
+            <div class="hero-image-wrapper hero-image-desktop reveal" style="transition-delay: 0.2s;">
+                <div class="app-icon-hero">
+                    <div class="orbit-ring orbit-ring-1"><div class="orbit-dot"></div></div>
+                    <div class="orbit-ring orbit-ring-2"></div>
+                    <div class="app-icon-display">
+                        <img src="../assets/cubedit-icon.png" alt="Cubedit">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SOCIAL PROOF ===== -->
+    <section class="social-proof container reveal">
+        <div class="proof-grid">
+            <div class="proof-item">
+                <h3 class="text-gradient-cubedit">6</h3>
+                <p>Editing tabs — Light, Color, Curves, Details, LUTs, Transform</p>
+            </div>
+            <div class="proof-item">
+                <h3 class="text-gradient-cubedit">Photo &amp; Video</h3>
+                <p>Full color grading for both stills and video</p>
+            </div>
+            <div class="proof-item">
+                <h3 class="text-gradient-cubedit">LUTs</h3>
+                <p>Professional Look-Up Tables with Pro unlock</p>
+            </div>
+            <div class="proof-item">
+                <h3 class="text-gradient-cubedit">100%</h3>
+                <p>On-device — your media never leaves your iPhone</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section id="how-it-works" class="container how-section">
+        <span class="section-label reveal">Workflow</span>
+        <h2 class="reveal">Three steps to a perfect grade.</h2>
+        <p class="reveal" style="margin: 0 auto;">From import to export — Cubedit keeps it precise and purposeful.</p>
+
+        <div class="steps-grid">
+            <div class="step-card reveal">
+                <div class="step-connector"></div>
+                <div class="glass-panel">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">📷</div>
+                    <h3>Import Your Media</h3>
+                    <p>Load a photo or video from your library, camera roll, or directly from the camera. Supported formats include HEIC, JPEG, and MOV.</p>
+                </div>
+            </div>
+            <div class="step-card reveal" style="transition-delay: 0.1s;">
+                <div class="step-connector"></div>
+                <div class="glass-panel">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🎨</div>
+                    <h3>Grade &amp; Refine</h3>
+                    <p>Dial in exposure, contrast, tone curves, white balance, saturation, and sharpening. Apply a LUT for an instant cinematic transformation.</p>
+                </div>
+            </div>
+            <div class="step-card reveal" style="transition-delay: 0.2s;">
+                <div class="glass-panel">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">✨</div>
+                    <h3>Export at Full Quality</h3>
+                    <p>Save your project in Cubedit or export at highest quality directly to your Photo Library — no compression, no watermarks with Pro.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section id="features" class="container features-section">
+        <span class="section-label reveal">Toolset</span>
+        <h2 class="reveal">Every tool. No compromises.</h2>
+        <p class="reveal">Built for minimalists who value precision and tactile control.</p>
+
+        <div class="features-grid">
+            <div class="glass-panel feature-card reveal">
+                <span class="feature-icon">⚡</span>
+                <h3>Real-Time Rendering</h3>
+                <p>Every adjustment previews live as you drag. The render engine processes on-device with CoreImage for zero-lag feedback.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.05s;">
+                <span class="feature-icon">🎞️</span>
+                <h3>LUT Engine</h3>
+                <p>Apply professional .cube Look-Up Tables to your images and videos. Preview any LUT before unlocking with a Pro subscription.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.1s;">
+                <span class="feature-icon">📈</span>
+                <h3>Tone Curves</h3>
+                <p>Fine-tune luminance with a custom spline curve editor. Add control points and sculpt contrast with surgical precision.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.15s;">
+                <span class="feature-icon">🎬</span>
+                <h3>Video Grading</h3>
+                <p>The full editing suite works on video clips too — apply LUTs, exposure, contrast, and colour correction frame-perfect.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.2s;">
+                <span class="feature-icon">↔️</span>
+                <h3>Split Comparison</h3>
+                <p>A draggable split-screen lets you compare before and after side by side at any point during your edit.</p>
+            </div>
+            <div class="glass-panel feature-card reveal" style="transition-delay: 0.25s;">
+                <span class="feature-icon">🔄</span>
+                <h3>Undo / Redo</h3>
+                <p>Full edit history so you can explore fearlessly. Step back through every change with a single tap.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EDITOR SHOWCASE ===== -->
+    <section class="container tools-section">
+        <span class="section-label reveal">Interface</span>
+        <h2 class="reveal">Designed for precision.</h2>
+        <p class="reveal" style="margin: 0 auto;">Minimal chrome, maximum control. The interface stays out of your way so the image takes centre stage.</p>
+
+        <div class="tools-visual reveal" style="transition-delay: 0.1s;">
+            <div class="editor-mockup">
+                <!-- Fake top nav -->
+                <div class="editor-nav">
+                    <span class="editor-nav-label">Exit &nbsp; ↩ &nbsp; ↪</span>
+                    <span style="font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(242,237,232,0.7);">CUBEDIT</span>
+                    <span class="editor-nav-action">Export &nbsp; Save</span>
+                </div>
+
+                <!-- Fake image area -->
+                <div class="editor-image-area">
+                    <div class="photo-bands">
+                        <div class="band" style="background: linear-gradient(180deg, #2e2820 0%, #1e1814 100%);"></div>
+                        <div class="band" style="background: linear-gradient(180deg, #3a3020 0%, #2a2216 100%);"></div>
+                        <div class="band" style="background: linear-gradient(180deg, #4a3c28 0%, #342a18 100%);"></div>
+                        <div class="band" style="background: linear-gradient(180deg, #3e3224 0%, #2c2418 100%);"></div>
+                        <div class="band" style="background: linear-gradient(180deg, #2a2420 0%, #1c1810 100%);"></div>
+                    </div>
+                    <!-- Before/After labels -->
+                    <div style="position:absolute; top:10px; right:12px; display:flex; align-items:center; gap:6px; background:rgba(26,24,20,0.7); padding:4px 10px; border-radius:20px; border:1px solid rgba(196,168,130,0.15);">
+                        <span style="font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(242,237,232,0.5);">Original</span>
+                    </div>
+                </div>
+
+                <!-- Adjustment panel -->
+                <div class="editor-panel">
+                    <div class="editor-tabs" id="editor-tabs">
+                        <span class="editor-tab" data-tab="light">Light</span>
+                        <span class="editor-tab active" data-tab="color">Color</span>
+                        <span class="editor-tab" data-tab="curves">Curves</span>
+                        <span class="editor-tab" data-tab="details">Details</span>
+                        <span class="editor-tab" data-tab="luts">LUTs</span>
+                        <span class="editor-tab" data-tab="transform">Transform</span>
+                    </div>
+                    <div class="editor-sliders">
+                        <div class="editor-slider-row">
+                            <span class="slider-label">Exposure</span>
+                            <div class="slider-track">
+                                <div class="slider-fill" style="width: 50%;"></div>
+                                <div class="slider-thumb" style="left: 50%;"></div>
+                            </div>
+                            <span class="slider-value">0.0</span>
+                        </div>
+                        <div class="editor-slider-row">
+                            <span class="slider-label">Contrast</span>
+                            <div class="slider-track">
+                                <div class="slider-fill anim-1" style="width: 55%;"></div>
+                                <div class="slider-thumb" style="left: 55%;"></div>
+                            </div>
+                            <span class="slider-value">+0.1</span>
+                        </div>
+                        <div class="editor-slider-row">
+                            <span class="slider-label">Highlights</span>
+                            <div class="slider-track">
+                                <div class="slider-fill" style="width: 65%;"></div>
+                                <div class="slider-thumb" style="left: 65%;"></div>
+                            </div>
+                            <span class="slider-value">+0.3</span>
+                        </div>
+                        <div class="editor-slider-row">
+                            <span class="slider-label">Shadows</span>
+                            <div class="slider-track">
+                                <div class="slider-fill" style="width: 35%;"></div>
+                                <div class="slider-thumb" style="left: 35%;"></div>
+                            </div>
+                            <span class="slider-value">−0.3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SPLIT COMPARISON SHOWCASE ===== -->
+    <section class="container showcase">
+        <span class="section-label reveal">Before &amp; After</span>
+        <h2 class="reveal">See the difference.</h2>
+        <p class="reveal" style="margin: 0 auto;">Drag the split handle to compare your original and graded image — live, in the editor.</p>
+        <div class="showcase-layout">
+            <div class="showcase-img-wrapper reveal">
+                <div class="comparison-visual">
+                    <div class="comparison-before"></div>
+                    <div class="comparison-after"></div>
+                    <div class="comparison-divider"></div>
+                    <div class="comparison-handle">
+                        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 7H1M10 7h3M5 4l-2 3 2 3M9 4l2 3-2 3"/>
+                        </svg>
+                    </div>
+                    <div class="comparison-labels">
+                        <span class="comp-label">Before</span>
+                        <span class="comp-label">After</span>
+                    </div>
+                </div>
+                <span class="showcase-badge">Drag to Compare</span>
+            </div>
+            <div class="showcase-specs reveal" style="transition-delay: 0.15s;">
+                <div class="spec-row">
+                    <span class="spec-icon">🎚️</span>
+                    <div>
+                        <h4>Tone Curves</h4>
+                        <p>Spline-based luminance curve editor with draggable control points for surgical precision.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">🌡️</span>
+                    <div>
+                        <h4>White Balance</h4>
+                        <p>Temperature from 2000K to 10000K and tint adjustment let you fix any lighting condition.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">🔲</span>
+                    <div>
+                        <h4>Transform Tools</h4>
+                        <p>Rotate left or right and flip horizontally or vertically — non-destructively applied.</p>
+                    </div>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-icon">💾</span>
+                    <div>
+                        <h4>Project Library</h4>
+                        <p>All edits are saved as projects. Return, revise, and re-export any time without loss.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PRO PRICING ===== -->
+    <section class="container pro-section">
+        <span class="section-label reveal">Cubedit Pro</span>
+        <h2 class="reveal">Unlock the full workspace.</h2>
+        <p class="reveal" style="margin: 0 auto;">Start free — upgrade when you're ready for the complete LUT library and watermark-free exports.</p>
+
+        <div class="pricing-grid">
+            <!-- Free -->
+            <div class="glass-panel pricing-card reveal">
+                <p class="pricing-tier">Free</p>
+                <p class="pricing-price">$0</p>
+                <p class="pricing-cadence">Always free</p>
+                <ul class="pricing-features">
+                    <li>Full editing suite (Light, Color, Curves, Details, Transform)</li>
+                    <li>Import photos &amp; videos</li>
+                    <li>Project library</li>
+                    <li>Preview Pro LUTs with watermark</li>
+                    <li>Exports with watermark on LUT images</li>
+                </ul>
+                <a href="https://apps.apple.com" class="btn btn-secondary" style="text-align:center;">Download Free</a>
+            </div>
+
+            <!-- Monthly -->
+            <div class="glass-panel pricing-card reveal" style="transition-delay: 0.1s;">
+                <p class="pricing-tier">Pro Monthly</p>
+                <p class="pricing-price text-gradient-cubedit">Pro</p>
+                <p class="pricing-cadence">Billed monthly</p>
+                <ul class="pricing-features">
+                    <li>Everything in Free</li>
+                    <li>Full LUT library unlocked</li>
+                    <li>Watermark-free exports</li>
+                    <li>All future LUT packs</li>
+                </ul>
+                <a href="https://apps.apple.com" class="btn btn-secondary" style="text-align:center;">Subscribe Monthly</a>
+            </div>
+
+            <!-- Lifetime -->
+            <div class="glass-panel pricing-card featured reveal" style="transition-delay: 0.2s;">
+                <span class="pricing-badge">Best Value</span>
+                <p class="pricing-tier">Pro Lifetime</p>
+                <p class="pricing-price text-gradient-cubedit">Pro</p>
+                <p class="pricing-cadence">One-time purchase · No subscription</p>
+                <ul class="pricing-features">
+                    <li>Everything in Free</li>
+                    <li>Full LUT library unlocked forever</li>
+                    <li>Watermark-free exports</li>
+                    <li>All future LUT packs included</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="https://apps.apple.com" class="btn btn-cubedit" style="text-align:center;">Get Lifetime Access</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="container faq-section">
+        <span class="section-label reveal">Questions</span>
+        <h2 class="reveal">Frequently Asked Questions</h2>
+        <div class="faq-list reveal">
+            <div class="faq-item">
+                <button class="faq-question" id="faq-1">
+                    What is a LUT?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>A LUT (Look-Up Table) is a preset color grade — essentially a mathematical formula that maps the colours in your original image to a new colour space. Cinematographers and photographers use them to achieve consistent, cinematic looks across entire projects.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-2">
+                    Does Cubedit work on video?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. The full editing suite — including LUTs, exposure, contrast, colour and detail adjustments — applies to video clips, not just photos. Export at your chosen quality to your Photo Library.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-3">
+                    Do my photos leave my device?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Never. All processing happens entirely on-device using Apple's CoreImage framework. Your media is never uploaded to any server — Cubedit has no cloud component whatsoever.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-4">
+                    Can I try Pro LUTs before buying?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. All Pro LUTs are available to preview on your images before purchasing. Free users see a watermark on exports; the watermark is removed once you subscribe or purchase lifetime access.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" id="faq-5">
+                    What iPhone does Cubedit require?
+                    <span class="faq-chevron">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Cubedit runs on any iPhone with iOS 17 or later. The real-time render engine is optimised for modern Apple Silicon but performs well across all supported devices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="container cta-section">
+        <div class="glass-panel cta-panel reveal">
+            <img src="../assets/cubedit-icon.png" alt="Cubedit"
+                style="width: 72px; height: 72px; border-radius: 18px; margin-bottom: 1.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,168,130,0.1);">
+            <h2>Your creative tool.<br><span class="text-gradient-cubedit">Ready when you are.</span></h2>
+            <p>Download free and start grading immediately. No account, no subscription required.</p>
+            <p class="cta-free text-gradient-cubedit">Free</p>
+            <p class="cta-note">Pro unlock available via in-app purchase</p>
+            <a href="https://apps.apple.com" class="btn btn-cubedit btn-lg" id="cta-download-btn">Download on the App Store</a>
+            <div class="trust-badges">
+                <span class="trust-badge"><span class="trust-dot"></span> No account required</span>
+                <span class="trust-badge"><span class="trust-dot"></span> 100% on-device</span>
+                <span class="trust-badge"><span class="trust-dot"></span> Made in Australia</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="container">
+        <div class="footer-content">
+            <p style="margin:0;">&copy; 2026 Quiet Stack Studios. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms of Service</a>
+                <a href="../support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Editor tab switcher (mockup interaction)
+        document.querySelectorAll('.editor-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

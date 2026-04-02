@@ -28,46 +28,101 @@
 
     <header class="container page-header reveal">
         <h1>Privacy Policy</h1>
-        <p>Last updated: February 2026</p>
+        <p>Last updated: April 2026</p>
     </header>
 
     <section class="container reveal" style="padding-top: 0;">
         <div class="document-content glass-panel">
-            <p>At Quiet Stack Studios, privacy isn't just a feature—it's the foundation of everything we build. This
-                Privacy Policy explains how we collect, use, and protect your information.</p>
+            <p>At Quiet Stack Studios, privacy isn't just a feature — it's the foundation of everything we build. This
+                Privacy Policy explains how we handle your information across all of our applications.</p>
 
             <h2>1. Information Collection</h2>
-            <p>We believe in data minimization. Our apps are built to function primarily on-device. We do not require
-                you to create an account, nor do we collect identifiable usage analytics without your explicit, opt-in
-                consent.</p>
+            <p>We believe in data minimisation. Our apps are designed to function primarily on-device. We do not require
+                you to create an account, nor do we collect identifiable usage analytics. Where a third-party SDK is
+                used (see §7), this is disclosed explicitly below.</p>
 
-            <h2>2. On-Device Processing & Screen Time API (Flint)</h2>
-            <p><strong>Flint</strong> utilize Apple's Screen Time API (FamilyControls, ManagedSettings, and
+            <h2>2. On-Device Processing &amp; Screen Time API (Flint)</h2>
+            <p><strong>Flint</strong> utilises Apple's Screen Time API (FamilyControls, ManagedSettings, and
                 DeviceActivity) to provide its core blocking and reporting functionality. This data is processed
                 entirely locally on your device. We do not collect, transmit, or sell any of your personal browsing
                 history, app usage data, or screen time statistics.</p>
 
-            <h2>3. Camera, Photos & Notifications (Verdant Garden)</h2>
+            <h2>3. Camera, Photos &amp; Notifications (Verdant Garden)</h2>
             <p><strong>Verdant Garden</strong> requests access to your device's Camera and Photo Library solely for the
                 purpose of allowing you to log the visual growth of your plants. These photos remain on your local
-                device or your personal iCloud account. Verdant Garden also utilizes local notifications to deliver
+                device or your personal iCloud account. Verdant Garden also uses local notifications to deliver
                 watering reminders, scheduled natively on your device.</p>
 
             <h2>4. Mindful Breathing (Oxyn)</h2>
-            <p><strong>Oxyn</strong> is designed to guide your breathing practices entirely on-device. We do not record, collect, or monetize your breathing sessions or app usage data. Any preferences or session history remain strictly local on your device.</p>
+            <p><strong>Oxyn</strong> is designed to guide your breathing practices entirely on-device. We do not record,
+                collect, or monetise your breathing sessions or app usage data. Any preferences or session history
+                remain strictly local on your device.</p>
 
             <h2>5. Habit Tracking (Clear Days)</h2>
-            <p><strong>Clear Days</strong> stores all habit tracking data — including streaks, relapse history, milestones, and personal motivations — locally on your device. We do not collect, view, or share this information. If you enable iCloud sync, your data is stored securely in your private iCloud account and synced across your devices; we cannot access it. Home screen widgets use on-device App Groups to display your streak data and do not transmit information externally.</p>
+            <p><strong>Clear Days</strong> stores all habit tracking data — including streaks, relapse history,
+                milestones, and personal motivations — locally on your device. We do not collect, view, or share this
+                information. If you enable iCloud sync, your data is stored securely in your private iCloud account and
+                synced across your devices; we cannot access it. Home screen widgets use on-device App Groups to
+                display your streak data and do not transmit information externally.</p>
 
-            <h2>6. iCloud Synchronization</h2>
-            <p>If you choose to sync your data across devices, we utilize Apple's iCloud framework. Your data is stored
-                securely in your private iCloud account. We cannot access, view, or modify it.</p>
+            <h2>6. Photos, Camera &amp; Media (Cubedit)</h2>
+            <p><strong>Cubedit</strong> requests access to your device's <strong>Photo Library</strong> and
+                <strong>Camera</strong> for the sole purpose of importing photos and videos for editing and exporting
+                finished edits back to your library. We want to be clear about what this means in practice:</p>
+            <ul>
+                <li>Your photos and videos are <strong>never uploaded to any server</strong>. They do not leave your
+                    device unless you explicitly choose to share them yourself.</li>
+                <li>All image and video processing — including colour grading, LUT application, tone curve adjustments,
+                    exposure, contrast, saturation, sharpening, and export rendering — is performed entirely
+                    <strong>on-device</strong> using Apple's CoreImage framework.</li>
+                <li>Cubedit has no backend server, no cloud storage, and no network dependency for its core editing
+                    features.</li>
+                <li>Your creative work remains entirely yours. We claim no rights over any content you import into or
+                    export from Cubedit.</li>
+            </ul>
 
-            <h2>7. Third-Party Services</h2>
+            <h2>7. Crash Reporting — Firebase Crashlytics (Cubedit)</h2>
+            <p><strong>Cubedit</strong> uses <strong>Firebase Crashlytics</strong>, a crash reporting service provided
+                by Google LLC, to help us identify and fix bugs. When the app crashes or encounters an error, Crashlytics
+                automatically collects and transmits the following information to Google's servers:</p>
+            <ul>
+                <li>Device model and operating system version</li>
+                <li>App version and build number</li>
+                <li>A randomised Crashlytics installation UUID (not linked to any personal identity)</li>
+                <li>Stack traces and crash logs describing what the app was doing at the time of the error</li>
+            </ul>
+            <p>Crashlytics does <strong>not</strong> collect your name, email address, Apple ID, photos, videos, or any
+                content you edit within the app. The crash reports are used exclusively for app stability and
+                improvement. Google's handling of this data is governed by the
+                <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer"
+                    style="color: var(--accent-primary);">Firebase Privacy Policy</a>. You can learn more about how
+                Google uses data at
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer"
+                    style="color: var(--accent-primary);">policies.google.com/privacy</a>.</p>
+
+            <h2>8. iCloud Synchronisation</h2>
+            <p>If you choose to sync your data across devices (where applicable), we utilise Apple's iCloud framework.
+                Your data is stored securely in your private iCloud account. We cannot access, view, or modify it.</p>
+
+            <h2>9. Third-Party Services Summary</h2>
             <p>We do not sell your data. We do not integrate third-party advertising SDKs or tracking pixels into our
-                applications.</p>
+                applications. The only third-party SDK we use is Firebase Crashlytics in Cubedit (§7 above), used
+                solely for crash diagnostics.</p>
 
-            <h2>8. Contact Us</h2>
+            <h2>10. Australian Privacy Act</h2>
+            <p>Quiet Stack Studios is based in Australia and is mindful of its obligations under the
+                <em>Privacy Act 1988</em> (Cth) and the Australian Privacy Principles (APPs). Because our apps do not
+                collect personal information (name, email, location, or other identifiers) directly, most of the APPs
+                are not triggered. Where Crashlytics transmits limited technical data, it is handled by Google in
+                accordance with their own compliance obligations. If you have any concern about how your information
+                is handled, please contact us at the address below.</p>
+
+            <h2>11. Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. Where we make material changes, we will update the
+                "Last updated" date at the top of this page. Continued use of our apps after any updates constitutes
+                your acceptance of the revised policy.</p>
+
+            <h2>12. Contact Us</h2>
             <p>If you have any questions about this Privacy Policy, please contact us at <a
                     href="mailto:hello@quietstackstudios.com"
                     style="color: var(--accent-primary);">hello@quietstackstudios.com</a>.</p>

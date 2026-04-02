@@ -35,6 +35,9 @@
   --cleardays-gradient: linear-gradient(135deg, #3498DB 0%, #5DADE2 100%);
   --consilient-color: #4A90D9;
   --consilient-gradient: linear-gradient(135deg, #2A5298 0%, #4A90D9 100%);
+  --cubedit-color: #C4A882;
+  /* Muted Gold / Sand */
+  --cubedit-gradient: linear-gradient(135deg, #C4A882 0%, #8C6D44 100%);
 
   /* Typography */
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -145,6 +148,13 @@ h1 {
 
 .text-gradient-consilient {
   background: var(--consilient-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cubedit {
+  background: var(--cubedit-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
