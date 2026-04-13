@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flint Feedback | Quiet Stack Studios</title>
+    <meta name="description" content="Share your experience with the Flint Card and app. Help us make Flint even better.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script async src="https://tally.so/widgets/embed.js"></script>
+    <style>
+        .survey-hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 120px;
+            padding-bottom: 4rem;
+        }
+
+        .survey-hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle at 30% 30%, rgba(245, 158, 11, 0.10) 0%, transparent 55%),
+                radial-gradient(circle at 70% 70%, rgba(217, 119, 6, 0.06) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .survey-header {
+            text-align: center;
+            max-width: 560px;
+            margin: 0 auto 3rem;
+        }
+
+        .survey-header img {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .survey-header h1 {
+            margin-bottom: 0.75rem;
+        }
+
+        .survey-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .survey-embed-wrapper {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* ---- Tally iframe ---- */
+        .tally-embed {
+            width: 100%;
+            min-height: 680px;
+            border: none;
+            background: transparent;
+        }
+
+        /* ---- Placeholder shown before Tally embed is set up ---- */
+        .embed-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 4rem 2rem;
+            border: 2px dashed rgba(245, 158, 11, 0.25);
+            border-radius: 16px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .embed-placeholder strong {
+            color: var(--text-primary);
+            font-size: 1.05rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                Quiet Stack Studios
+                <span style="color: rgba(255,255,255,0.3); margin: 0 0.5rem; font-weight: 300;">/</span>
+                <span style="color: var(--flint-color, #f59e0b); font-weight: 700;">Flint</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html#apps">Apps</a>
+                <a href="../support.html">Support</a>
+                <a href="flint.html" class="btn-nav-buy"
+                    style="background: var(--flint-gradient); color: #000; font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1.25rem; border-radius: 100px; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35); text-decoration: none;">Buy
+                    Card</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="survey-hero container">
+
+        <div class="survey-header reveal">
+            <img src="../assets/flint_dark_logo.png" alt="Flint Logo">
+            <h1>Share Your <span class="text-gradient-flint">Feedback</span></h1>
+            <p>Help us make Flint even better. Takes about 2 minutes.</p>
+        </div>
+
+        <div class="survey-embed-wrapper reveal" style="transition-delay: 0.1s;">
+            <iframe
+                class="tally-embed"
+                data-tally-src="https://tally.so/r/dWDGAV?transparentBackground=1&hideTitle=1"
+                width="100%"
+                height="100%"
+                frameborder="0"
+                marginheight="0"
+                marginwidth="0"
+                title="Flint Feedback Survey">
+            </iframe>
+        </div>
+
+    </section>
+
+    <footer class="container">
+        <div class="footer-content">
+            <p>&copy; 2026 Quiet Stack Studios. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms of Service</a>
+                <a href="../support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                reveals.forEach(r => observer.observe(r));
+            } else {
+                reveals.forEach(r => r.classList.add('visible'));
+            }
+        });
+    </script>
+
+</body>
+
+</html>
