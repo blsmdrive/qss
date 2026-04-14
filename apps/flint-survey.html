@@ -16,45 +16,8 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            padding-top: 120px;
+            padding-top: 80px;
             padding-bottom: 4rem;
-        }
-
-        .survey-hero::before {
-            content: '';
-            position: absolute;
-            top: -40%;
-            left: -20%;
-            width: 140%;
-            height: 140%;
-            background: radial-gradient(circle at 30% 30%, rgba(245, 158, 11, 0.10) 0%, transparent 55%),
-                radial-gradient(circle at 70% 70%, rgba(217, 119, 6, 0.06) 0%, transparent 50%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .survey-header {
-            text-align: center;
-            max-width: 560px;
-            margin: 0 auto 3rem;
-        }
-
-        .survey-header img {
-            width: 64px;
-            height: 64px;
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .survey-header h1 {
-            margin-bottom: 0.75rem;
-        }
-
-        .survey-header p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin: 0;
         }
 
         .survey-embed-wrapper {
@@ -118,16 +81,10 @@
 
     <section class="survey-hero container">
 
-        <div class="survey-header reveal">
-            <img src="../assets/flint_dark_logo.png" alt="Flint Logo">
-            <h1>Share Your <span class="text-gradient-flint">Feedback</span></h1>
-            <p>Help us make Flint even better. Takes about 2 minutes.</p>
-        </div>
-
-        <div class="survey-embed-wrapper reveal" style="transition-delay: 0.1s;">
+        <div class="survey-embed-wrapper reveal">
             <iframe
                 class="tally-embed"
-                data-tally-src="https://tally.so/r/dWDGAV?transparentBackground=1&hideTitle=1"
+                data-tally-src="https://tally.so/r/dWDGAV?transparentBackground=1"
                 width="100%"
                 height="100%"
                 frameborder="0"
